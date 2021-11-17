@@ -1,14 +1,11 @@
-import React from 'react';
-import { useState } from 'react'
+import React, { useState } from 'react';
 import './App.css'
 import Table from './components/Table';
 import { staticData } from './config/staticValues'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  const columns = React.useMemo(
-    () => [
+  const columns = React.useMemo(() => [
       {
         Header: "Name",
         accessor: "name",
@@ -25,14 +22,13 @@ function App() {
         Header: "Role",
         accessor: "role",
       },
-    ],
-    []
-  );
+    ], [])
 
   const data = React.useMemo(() => staticData(), [])
 
   return (
     <div className="App">
+      <h1>Hello React Table!</h1>
       <div>
         <Table columns={columns} data={data} />
       </div>
