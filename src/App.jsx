@@ -8,15 +8,19 @@ function App() {
   const columns = React.useMemo(() => [
       {
         Header: "Name",
-        accessor: "name",
+        accessor: "name"
       },
       {
         Header: "Title",
-        accessor: "title",
+        accessor: "title"
       },
       {
         Header: "Status",
-        accessor: "status",
+        accessor: "status"
+      },
+      {
+        Header: "Age",
+        accessor: "age"
       },
       {
         Header: "Role",
