@@ -1,4 +1,5 @@
-const staticData = () => [
+const staticData = () => {
+  const data = [
   {
     name: "Jane Cooper",
     email: "jane.cooper@example.com",
@@ -65,6 +66,8 @@ const staticData = () => [
       "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
     age: 24
   }
-];
+]
+  return [...data, ...data, ...data];
+};
 
 export { staticData }

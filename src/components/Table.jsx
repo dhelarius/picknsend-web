@@ -1,7 +1,7 @@
 // src/Table.js
 import React from "react";
 import 'regenerator-runtime'
-import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy } from "react-table";
+import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from "react-table";
 
 // Define a default UI for filtering
 const GlobalFilter = ({
@@ -66,7 +66,7 @@ const SelectColumnFilter = ({
 
 const Table = ({ columns, data }) => {
     // Use the state and functions returned from useTable to build your UI
-    const instanceTable = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+    const instanceTable = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy, usePagination);
   
     const { 
         getTableProps, 
@@ -74,6 +74,20 @@ const Table = ({ columns, data }) => {
         headerGroups,
         rows,
         prepareRow,
+
+        page, // Instead of using 'rows', we'll use page,
+        // which has only the rows for the active page
+
+        // The rest of these things are super handy, too ;)
+        canPreviousPage,
+        canNextPage,
+        pageOptions,
+        pageCount,
+        gotoPage,
+        nextPage,
+        previousPage,
+        setPageSize,
+
         state,
         preGlobalFilteredRows,
         setGlobalFilter
@@ -120,7 +134,7 @@ const Table = ({ columns, data }) => {
                 ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-                {rows.map(row => {
+                {page.map(row => {
                 prepareRow(row);
                 return (
                     <tr {...row.getRowProps()}>
@@ -132,6 +146,40 @@ const Table = ({ columns, data }) => {
                 })}
             </tbody>
         </table>
+        {/* PAGINATION */}
+        <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <strong>
+            {state.pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <select
+          value={state.pageSize}
+          onChange={e => {
+              setPageSize(Number(e.target.value))
+          }}
+        >
+          {[5, 10, 20].map(pageSize => (
+              <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
+      {/* END PAGINATION */}
         <div>
             <pre>
                 <code>{JSON.stringify(state, null, 2)}</code>
