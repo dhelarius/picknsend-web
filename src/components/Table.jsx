@@ -1,7 +1,7 @@
 // src/Table.js
 import React from "react";
 import 'regenerator-runtime'
-import { useTable, useGlobalFilter, useAsyncDebounce } from "react-table";
+import { useTable, useGlobalFilter, useAsyncDebounce, useFilters } from "react-table";
 
 // Define a default UI for filtering
 const GlobalFilter = ({
@@ -30,9 +30,43 @@ const GlobalFilter = ({
     )
 }
 
+// This is a custom filter UI for selecting
+// a unique option from a list
+const SelectColumnFilter = ({
+    column: { filterValue, setFilter, preFilteredRows, id }
+}) => {
+    // Calculate the options for filtering
+    // using the preFilteredRows
+    const options = React.useMemo(() => {
+        const options = new Set();
+        preFilteredRows.forEach(row => {
+            options.add(row.values[id]);
+        });
+        return [...options.values()];
+    }, [id, preFilteredRows]);
+
+    return(
+        <select
+            name={id}
+            id={id}
+            value={filterValue}
+            onChange={e => {
+                setFilter(e.target.value || undefined);
+            }}
+        >
+            <option value="">All</option>
+            {options.map((option, i) => (
+                <option key={i} value={option}>
+                    {option}
+                </option>
+            ))}
+        </select>
+    );
+}
+
 const Table = ({ columns, data }) => {
     // Use the state and functions returned from useTable to build your UI
-    const instanceTable = useTable({ columns, data }, useGlobalFilter);
+    const instanceTable = useTable({ columns, data }, useFilters, useGlobalFilter);
   
     const { 
         getTableProps, 
@@ -53,6 +87,16 @@ const Table = ({ columns, data }) => {
             globalFilter={state.globalFilter}
             setGlobalFilter={setGlobalFilter}
         />
+        {headerGroups.map((headerGroup) =>
+            headerGroup.headers.map((column) =>
+            column.Filter ? (
+                <div key={column.id}>
+                <label htmlFor={column.id}>{column.render("Header")}: </label>
+                {column.render("Filter")}
+                </div>
+            ) : null
+            )
+        )}
         <table {...getTableProps()} border="1">
             <thead>
                 {headerGroups.map((headerGroup) => (
@@ -76,8 +120,15 @@ const Table = ({ columns, data }) => {
                 })}
             </tbody>
         </table>
+        <div>
+            <pre>
+                <code>{JSON.stringify(state, null, 2)}</code>
+            </pre>
+        </div>
     </>
   );
 }
+
+export { SelectColumnFilter }
 
 export default Table

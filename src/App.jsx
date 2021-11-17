@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css'
-import Table from './components/Table';
+import Table, { SelectColumnFilter } from './components/Table';
 import { staticData } from './config/staticValues'
 
 function App() {
@@ -21,6 +21,8 @@ function App() {
       {
         Header: "Role",
         accessor: "role",
+        Filter: SelectColumnFilter,
+        filter: 'includes'
       },
     ], [])
 
