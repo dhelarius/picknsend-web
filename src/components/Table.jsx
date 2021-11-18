@@ -4,8 +4,8 @@ import 'regenerator-runtime'
 import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from "react-table";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { Button, PageButton } from "./Button";
-import { render } from "react-dom";
 import { classNames } from "../shared/utils";
+import { SortDownIcon, SortIcon, SortUpIcon } from "./Icon";
 
 // Define a default UI for filtering
 const GlobalFilter = ({
@@ -173,18 +173,22 @@ const Table = ({ columns, data }) => {
                                 // we can add them into the header props
                                     <th 
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                        className="group px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         {...column.getHeaderProps(column.getSortByToggleProps())}
                                     >
-                                        {column.render("Header")}
-                                        {/* Add a sort direction indicator */}
-                                        <span>
-                                        {column.isSorted
-                                            ? column.isSortedDesc
-                                                ? ' ▼'
-                                                : ' ▲'
-                                            : ''}
-                                        </span>
+                                        <div className="flex items-center justify-between">
+                                            {column.render("Header")}
+                                            {/* Add a sort direction indicator */}
+                                            <span>
+                                                {column.isSorted
+                                                    ? column.isSortedDesc
+                                                        ? <SortDownIcon className="w-4 h-4 text-gray-400" />
+                                                        : <SortUpIcon className="w-4 h-4 text-gray-400" />
+                                                    : (
+                                                        <SortIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100" />
+                                                    )}
+                                            </span>
+                                        </div>
                                     </th>
                                 ))}
                                 </tr>
