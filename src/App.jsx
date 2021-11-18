@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css'
-import Table, { SelectColumnFilter } from './components/Table';
+import Table, { SelectColumnFilter, StatusPill } from './components/Table';
 import { staticData } from './config/staticValues'
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
       },
       {
         Header: "Status",
-        accessor: "status"
+        accessor: "status",
+        Cell: StatusPill
       },
       {
         Header: "Age",
