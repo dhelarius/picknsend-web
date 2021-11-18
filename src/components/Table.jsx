@@ -91,6 +91,26 @@ const StatusPill = ({ value }) => {
     );
 }
 
+const AvatarCell = ({ value, column, row }) => {
+    return (
+        <div className="flex items-center">
+            <div className="flex-shrink-0 h-10 w-10">
+                <img
+                    className="h-10 w-10 rounded-full"
+                    src={row.original[column.imgAccesor]}
+                    alt=""
+                />
+            </div>
+            <div className="ml-4">
+                <div className="text-sm font-medium text-gray-900">{value}</div>
+                <div className="text-sm text-gray-500">
+                    {row.original[column.emailAccesor]}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 const Table = ({ columns, data }) => {
     // Use the state and functions returned from useTable to build your UI
     const instanceTable = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy, usePagination);
@@ -183,7 +203,13 @@ const Table = ({ columns, data }) => {
                                             <td 
                                                 {...cell.getCellProps()}
                                                 className="px-6 py-4 whitespace-nowrap"
-                                            >{cell.render("Cell")}</td>
+                                                role="cell"
+                                            >
+                                                {cell.column.Cell.name === "defaultRenderer" 
+                                                 ? cell.render("Cell")
+                                                 : <div className="text-sm text-gray-500">{cell.render("Cell")}</div>
+                                                }
+                                            </td>
                                         );
                                     })}
                                     </tr>
@@ -268,6 +294,6 @@ const Table = ({ columns, data }) => {
   );
 }
 
-export { SelectColumnFilter, StatusPill }
+export { SelectColumnFilter, AvatarCell, StatusPill }
 
 export default Table
