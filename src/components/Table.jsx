@@ -1,8 +1,10 @@
 // src/Table.js
 import React from "react";
 import 'regenerator-runtime'
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from "react-table";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { Button, PageButton } from "./Button";
+import { render } from "react-dom";
 
 // Define a default UI for filtering
 const GlobalFilter = ({
@@ -17,9 +19,11 @@ const GlobalFilter = ({
     }, 200)
 
     return(
-        <span>
-            Search: {' '}
-            <input 
+        <label className="flex gap-x-2 items-baseline">
+            <span className="text-gray-700">Search: {' '}</span>
+            <input
+                type="text"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 value={value || ""}
                 onChange={e => {
                     setValue(e.target.value);
@@ -27,14 +31,14 @@ const GlobalFilter = ({
                 }}
                 placeholder={`${count} records...`}
             />
-        </span>
+        </label>
     )
 }
 
 // This is a custom filter UI for selecting
 // a unique option from a list
 const SelectColumnFilter = ({
-    column: { filterValue, setFilter, preFilteredRows, id }
+    column: { filterValue, setFilter, preFilteredRows, id, render }
 }) => {
     // Calculate the options for filtering
     // using the preFilteredRows
@@ -47,21 +51,25 @@ const SelectColumnFilter = ({
     }, [id, preFilteredRows]);
 
     return(
-        <select
-            name={id}
-            id={id}
-            value={filterValue}
-            onChange={e => {
-                setFilter(e.target.value || undefined);
-            }}
-        >
-            <option value="">All</option>
-            {options.map((option, i) => (
-                <option key={i} value={option}>
-                    {option}
-                </option>
-            ))}
-        </select>
+        <label className="flex gap-x-2 items-baseline">
+            <span className="text-gray-700">{render("Header")}: </span>
+            <select
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                name={id}
+                id={id}
+                value={filterValue}
+                onChange={e => {
+                    setFilter(e.target.value || undefined);
+                }}
+            >
+                <option value="">All</option>
+                {options.map((option, i) => (
+                    <option key={i} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
+        </label>
     );
 }
 
@@ -97,21 +105,23 @@ const Table = ({ columns, data }) => {
   // Render the UI for your table
   return (
     <>
-        <GlobalFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-        />
-        {headerGroups.map((headerGroup) =>
-            headerGroup.headers.map((column) =>
-            column.Filter ? (
-                <div key={column.id}>
-                <label htmlFor={column.id}>{column.render("Header")}: </label>
-                {column.render("Filter")}
-                </div>
-            ) : null
-            )
-        )}
+        <div className="flex gap-x-2">
+            <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+            />
+            {headerGroups.map((headerGroup) =>
+                headerGroup.headers.map((column) =>
+                column.Filter ? (
+                    <div key={column.id}>
+                    {/*<label htmlFor={column.id}>{column.render("Header")}: </label>*/}
+                    {column.render("Filter")}
+                    </div>
+                ) : null
+                )
+            )}
+        </div>
         <div className="mt-2 flex flex-col">
             <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -167,129 +177,70 @@ const Table = ({ columns, data }) => {
                 </div>
             </div>
         </div>
-
-        {/* PAGINATION V2 */}
-
-        <div className="bg-gray-100 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-      <div className="flex-1 flex justify-between sm:hidden">
-        <a
-          href="#"
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-        >
-          Previous
-        </a>
-        <a
-          href="#"
-          className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-        >
-          Next
-        </a>
-      </div>
-      <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
-            <span className="font-medium">97</span> results
-          </p>
-        </div>
-        <div>
-          <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-            <a
-              href="#"
-              className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-            >
-              <span className="sr-only">Previous</span>
-              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-            </a>
-            {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
-            <a
-              href="#"
-              aria-current="page"
-              className="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-            >
-              1
-            </a>
-            <a
-              href="#"
-              className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-            >
-              2
-            </a>
-            <a
-              href="#"
-              className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium"
-            >
-              3
-            </a>
-            <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-              ...
-            </span>
-            <a
-              href="#"
-              className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium"
-            >
-              8
-            </a>
-            <a
-              href="#"
-              className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-            >
-              9
-            </a>
-            <a
-              href="#"
-              className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-            >
-              10
-            </a>
-            <a
-              href="#"
-              className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-            >
-              <span className="sr-only">Next</span>
-              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-            </a>
-          </nav>
-        </div>
-      </div>
-    </div>
-
-        {/* END PAAGINATION V2 */}
-
         {/* PAGINATION */}
-        <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {state.pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <select
-          value={state.pageSize}
-          onChange={e => {
-              setPageSize(Number(e.target.value))
-          }}
-        >
-          {[5, 10, 20].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-      {/* END PAGINATION */}
+        <div className="py-3 flex items-center justify-between">
+            <div className="flex-1 flex justify-between sm:hidden">
+               <Button onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
+               <Button onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
+            </div>
+            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+               <div className="flex gap-x-2 items-baseline">
+                    <span className="text-sm text-gray-700">
+                        Page <span className="font-medium">{state.pageIndex + 1}</span> of <span className="font-medium">{pageOptions.length}</span>
+                    </span>
+                    <label>
+                    <span className="sr-only">Items Per Page</span>
+                    <select
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        value={state.pageSize}
+                        onChange={e => {
+                            setPageSize(Number(e.target.value))
+                        }}
+                    >
+                        {[5, 10, 20].map(pageSize => (
+                            <option key={pageSize} value={pageSize}>
+                                Show {pageSize}
+                            </option>
+                        ))}
+                    </select>
+                   </label>
+               </div>
+               <div>
+                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                        <PageButton
+                            className="rounded-l-md"
+                            onClick={() => gotoPage(0)}
+                            disabled={!canPreviousPage}
+                        >
+                            <span className="sr-only">First</span>
+                            <ChevronDoubleLeftIcon className="h-5 w-5" aria-hidden="true" />
+                        </PageButton>
+                        <PageButton
+                            onClick={() => previousPage()}
+                            disabled={!canPreviousPage}
+                        >
+                            <span className="sr-only">Previous</span>
+                            <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                        </PageButton>
+                        <PageButton
+                            onClick={() => nextPage()}
+                            disabled={!canNextPage}
+                        >
+                            <span className="sr-only">Next</span>
+                            <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                        </PageButton>
+                        <PageButton
+                            className="rounded-r-md"
+                            onClick={() => gotoPage(pageCount - 1)}
+                            disabled={!canNextPage}
+                        >
+                            <span className="sr-only">Last</span>
+                            <ChevronDoubleRightIcon className="h-5 w-5" aria-hidden="true" />
+                        </PageButton>      
+                   </nav>
+               </div>
+            </div>
+        </div>
         {/*<div>
             <pre>
                 <code>{JSON.stringify(state, null, 2)}</code>
