@@ -1,0 +1,12 @@
+{
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 6
+    },
+    "plugins": ["react","react-hooks"],
+    "rules": {
+        "react-hooks/rules-of-hooks": "error", // Checks rules of hooks
+        "react-hooks/exhautives-deps": "warn"  // Checks effect dependencies
+    }
+}
