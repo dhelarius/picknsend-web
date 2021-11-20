@@ -1,2 +1,2 @@
-# react-vite-template
-Plantilla para proyectos React con vite
+# Picknsend Web Application
+Proyecto de aplicación web para el courier picknsend
