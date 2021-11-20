@@ -3,6 +3,7 @@
     "rules": {
         "at-rule-no-unknown": [true, {
             "ignoreAtRules": [
+                "extends",
                 "tailwind",
                 "apply",
                 "variants",
@@ -10,8 +11,13 @@
                 "screen"
             ]
         }],
-        "declaration-block-trailing-semicolon": null,
-        "no-descending-specificity": null,
-        "keyframe-declaration-no-important": true
+        "block-no-empty": true,
+        "selector-class-pattern": "[A-Za-z]+",    
+        "unit-allowed-list": ["em", "rem", "s", "vh", "px", "%", "vmin"],
+        "hue-degree-notation": "number",
+        "declaration-block-trailing-semicolon": "always",
+        "no-descending-specificity": true,
+        "keyframe-declaration-no-important": true,
+        "comment-whitespace-inside": "never"
     }
 }
