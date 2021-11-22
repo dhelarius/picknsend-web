@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "regenerator-runtime";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination } from "react-table";
@@ -63,7 +63,6 @@ const Actions = ({ value }) => {
 }
 
 const Table = ({ columns, data }) => {
-
     const instance = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
 
     const {
@@ -97,7 +96,9 @@ const Table = ({ columns, data }) => {
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
                 />
-                <button className="flex items-center bg-picknsend hover:bg-picknsend-dark px-4 text-xs font-medium rounded-md text-white shadow">
+                <button 
+                    className="flex items-center bg-picknsend hover:bg-picknsend-dark px-4 text-xs font-medium rounded-md text-white shadow"
+                >
                     <PlusSmIcon className="h-6 w-6" />
                  NUEVO
                 </button>

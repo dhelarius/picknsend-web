@@ -1,6 +1,18 @@
 import React from "react";
 import { classNames } from "../shared/utils";
 
+const PicknsendButton = ({ children, className, ...rest }) => {
+    return (
+        <button
+            type="button"
+            className="bg-picknsend hover:bg-picknsend-dark px-4 py-2 text-white font-medium shadow rounded-md"
+            {...rest}
+        >
+            {children}
+        </button>
+    );
+}
+
 const Button = ({ children, className, ...rest }) => {
     return (
         <button
@@ -31,4 +43,4 @@ const PageButton = ({ children, className, ...rest }) => {
     );
 }
 
-export { Button, PageButton }
+export { PicknsendButton, Button, PageButton }
