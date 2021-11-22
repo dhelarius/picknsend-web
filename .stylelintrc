@@ -15,6 +15,7 @@
         "selector-class-pattern": "[A-Za-z]+",    
         "unit-allowed-list": ["em", "rem", "s", "vh", "px", "%", "vmin"],
         "hue-degree-notation": "number",
+        "string-quotes": "single",
         "declaration-block-trailing-semicolon": "always",
         "no-descending-specificity": true,
         "keyframe-declaration-no-important": true,
