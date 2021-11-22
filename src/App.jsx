@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
-import Table, { Actions } from './components/Table';
+import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 
 function App() {
@@ -8,15 +8,15 @@ function App() {
 
   const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
-    { Header: "Name", accessor: "name" },
-    { Header: "LastName", accessor: "lastName" },
-    { Header: "Address", accessor: "address" },
-    { Header: "Phone", accessor: "phone" },
-    { Header: "DNI", accessor: "dni" },
+    { Header: "Nombre", accessor: "name" },
+    { Header: "Apellido", accessor: "lastName" },
+    { Header: "Dirección", accessor: "address" },
+    { Header: "Teléfono", accessor: "phone" },
+    { Header: "Cédula", accessor: "dni" },
     { Header: "Email", accessor: "email" },
-    { Header: "CreationDate", accessor: "creationDate" },
-    { Header: "Status", accessor: "status" },
-    { Header: "Actions", accessor: "actions", Cell: Actions }
+    { Header: "Fecha", accessor: "creationDate" },
+    { Header: "Estado", accessor: "status", Cell: StatusPill },
+    { Header: "Acciones", accessor: "actions", Cell: Actions }
   ], 
   [])
 
@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-dark">
-      <main className="max-w-4xl mx-auto sm:px-6 lg:px-8 pt-4">
+      <main className="sm:px-6 lg:px-8 pt-4">
         <div className="mt-4">
           <Table columns={columns} data={data} />
         </div>

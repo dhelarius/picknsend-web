@@ -10,7 +10,8 @@ module.exports = {
         transparent: 'transparent',
         picknsend: {
           light: '#c9eb40',
-          DEFAULT: '#94d500'
+          DEFAULT: '#94d500',
+          dark: '	#87c002'
         },
         blue: '#2e7ce0',
         gray: {
@@ -29,5 +30,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms")
+  ],
 }

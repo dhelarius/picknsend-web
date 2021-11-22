@@ -1,7 +1,7 @@
 import React from "react";
 import { classNames } from "../shared/utils";
 
-const Button = () => {
+const Button = ({ children, className, ...rest }) => {
     return (
         <button
             type="button"
@@ -16,7 +16,7 @@ const Button = () => {
     );
 }
 
-const PageButton = () => {
+const PageButton = ({ children, className, ...rest }) => {
     return (
         <button
             type="button"
