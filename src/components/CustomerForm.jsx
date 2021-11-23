@@ -1,11 +1,11 @@
 import { XIcon } from "@heroicons/react/solid";
 import { PicknsendButton } from "./Button";
 
-const CustomerForm = () => {
+const CustomerForm = ({ hideCustomerModal }) => {
     return (
         <div className="flex flex-col max-w-screen-sm mx-auto bg-white p-6 shadow rounded-md">
             <div className="flex justify-center items-center self-end h-8 w-8 hover:bg-gray-100 text-gray-700 m-2 mb-4 rounded-md">
-                <XIcon className="h-5 w-5" />
+                <XIcon onClick={() => hideCustomerModal()} className="h-5 w-5" />
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-x-4">
                 <input className="flex-grow sm:w-16 bg-gray-100 border-0 rounded-md" type="text" placeholder="npsv" />

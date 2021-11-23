@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "regenerator-runtime";
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon, PlusSmIcon } from "@heroicons/react/solid";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusSmIcon, TrashIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination } from "react-table";
 import { classNames } from "../shared/utils";
 import { Button, PageButton } from "./Button";
@@ -55,14 +55,24 @@ const StatusPill = ({ value }) => {
 
 const Actions = ({ value }) => {
     return (
-        <div className="flex gap-x-2">
-            <button onClick={() => console.log(`Editar ${value}`)} className="text-blue hover:bg-gray-100 px-4 py-2 rounded-md">EDITAR</button>
-            <button onClick={() => console.log(`Eliminar ${value}`)} className="text-error hover:bg-gray-100 px-4 py-2 rounded-md">ELIMINAR</button>
+        <div className="flex gap-x-4">
+            <div 
+                className="text-blue hover:bg-gray-100 p-1 rounded-md"
+                onClick={() => console.log(`Editar ${value}`)}
+            >
+                <PencilIcon className="h-6 w-6" />
+            </div>
+            <div 
+                className="text-error hover:bg-gray-100 p-1 rounded-md"
+                onClick={() => console.log(`Eliminar ${value}`)}
+            >
+                <TrashIcon className="h-6 w-6" />
+            </div>
         </div>
     );
 }
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, showCustomerModal }) => {
     const instance = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
 
     const {
@@ -97,7 +107,8 @@ const Table = ({ columns, data }) => {
                     setGlobalFilter={setGlobalFilter}
                 />
                 <button 
-                    className="flex items-center bg-picknsend hover:bg-picknsend-dark px-4 text-xs font-medium rounded-md text-white shadow"
+                    className="flex items-center bg-picknsend hover:bg-picknsend-dark px-4 text-sm font-medium rounded-md text-white shadow"
+                    onClick={() => showCustomerModal()}
                 >
                     <PlusSmIcon className="h-6 w-6" />
                  NUEVO

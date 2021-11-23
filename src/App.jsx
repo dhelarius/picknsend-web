@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import './App.css'
-import { PicknsendButton } from './components/Button';
 import CustomerForm from './components/CustomerForm';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 
 function App() {
-    const [showNewCustomerModal, setShowNewCustomerModal] = useState(false);
+  const [isCustomerModal, setCustomerModal] = useState(false);
+
+  const showCustomerModal = () => {
+    setCustomerModal(true);
+  }
+
+  const hideCustomerModal = () => {
+    setCustomerModal(false)
+  }
 
    const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
@@ -26,29 +33,19 @@ function App() {
 
   return (
     <>
-      {/*<div className="min-h-screen bg-gray-100 text-gray-dark">
+      <div className="min-h-screen bg-gray-100 text-gray-dark">
         <main className="sm:px-6 lg:px-8 pt-4">
           <div className="mt-4">
-            <Table columns={columns} data={data} />
+            <Table columns={columns} data={data} showCustomerModal={showCustomerModal} />
           </div>
         </main>
-  </div>*/}
-      {/*<div className="flex items-center min-h-screen bg-gray-700 bg-opacity-10 text-gray-dark pt-4">
-          <CustomerForm />
-    </div>*/}
-    <div className="flex items-center justify-center">
-      <div className="absolute z-10 top-2/4 bottom-2/4">
-        <PicknsendButton
-          onClick={() => setShowNewCustomerModal(true)}
-        >
-          NUEVO CLIENTE
-        </PicknsendButton>
       </div>
-      {showNewCustomerModal && 
-      <div className="z-20 min-h-screen min-w-full bg-gray-700 bg-opacity-20 text-gray-dark">
-        <CustomerForm />
+      {isCustomerModal && 
+      <div className="fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-30 px-4">
+        <div className="relative top-7 sm:top-1/4">
+          <CustomerForm hideCustomerModal={hideCustomerModal} />
+        </div>
       </div>}
-      </div>
     </>
   )
 }
