@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "regenerator-runtime";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusSmIcon, TrashIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination } from "react-table";
 import { classNames } from "../shared/utils";
-import { Button, PageButton } from "./Button";
+import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
+import { CustomerFormModal } from "./CustomerForm";
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -53,22 +54,37 @@ const StatusPill = ({ value }) => {
     );
 }
 
-const Actions = ({ value }) => {
+const Actions = ({ column, row }) => {
+    const [isCustomerModal, setCustomerModal] = useState(false);
+
+    const showCustomerModal = () => {
+        setCustomerModal(true);
+    }
+    
+    const hideCustomerModal = () => {
+        setCustomerModal(false)
+    }
+
+    let customer = row.values;
+
     return (
-        <div className="flex gap-x-4">
-            <div 
-                className="text-blue hover:bg-gray-100 p-1 rounded-md"
-                onClick={() => console.log(`Editar ${value}`)}
-            >
-                <PencilIcon className="h-6 w-6" />
+        <>
+            <div className="flex gap-x-4">
+                <div 
+                    className="text-blue hover:bg-gray-100 p-1 rounded-md"
+                    onClick={() => showCustomerModal()}
+                >
+                    <PencilIcon className="h-5 w-5" />
+                </div>
+                <div 
+                    className="text-error hover:bg-gray-100 p-1 rounded-md"
+                    onClick={() => console.log(`Eliminar ${customer.npsv}`)}
+                >
+                    <TrashIcon className="h-5 w-5" />
+                </div>
             </div>
-            <div 
-                className="text-error hover:bg-gray-100 p-1 rounded-md"
-                onClick={() => console.log(`Eliminar ${value}`)}
-            >
-                <TrashIcon className="h-6 w-6" />
-            </div>
-        </div>
+            {isCustomerModal && <CustomerFormModal customer={customer} hideCustomerModal={hideCustomerModal} />}
+        </>
     );
 }
 
@@ -106,13 +122,14 @@ const Table = ({ columns, data, showCustomerModal }) => {
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
                 />
-                <button 
-                    className="flex items-center bg-picknsend hover:bg-picknsend-dark px-4 text-sm font-medium rounded-md text-white shadow"
+                <PicknsendButton
                     onClick={() => showCustomerModal()}
                 >
-                    <PlusSmIcon className="h-6 w-6" />
-                 NUEVO
-                </button>
+                    <div className="flex items-center">
+                        <PlusSmIcon className="h-6 w-6" />
+                        NUEVO
+                    </div>
+                </PicknsendButton>
             </div>
             <div className="mt-2 flex flex-col">
                 <div className="-my-2 sm:-mx-6 lg:-mx-8">
@@ -177,7 +194,7 @@ const Table = ({ columns, data, showCustomerModal }) => {
                 </div>
             </div>
             {/* PAGINATION */}
-            <div className="py-3 flex items-center justify-between">
+            <div className="py-2 flex items-center justify-between">
                 <div className="flex-1 flex justify-between sm:hidden">
                     <Button onClick={() => previousPage()} disabled={!canPreviousPage}>Anterior</Button>
                     <Button onClick={() => nextPage()} disabled={!canNextPage}>Siguiente</Button>

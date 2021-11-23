@@ -9,8 +9,7 @@ const staticData = () => {
         "dni": null,
         "email": "PAVELI73@HOTMAIL.COM",
         "creationDate": "2013-04-09",
-        "status": "A",
-        "actions": "1264"
+        "status": "A"
       },
       {
         "npsv": "1918",
@@ -21,8 +20,7 @@ const staticData = () => {
         "dni": "047-0210363-3",
         "email": "CESARINA_BONIFACIO@HOTMAIL.COM",
         "creationDate": "2013-04-10",
-        "status": "A",
-        "actions": "1918"
+        "status": "A"
       },
       {
         "npsv": "01",
@@ -33,8 +31,7 @@ const staticData = () => {
         "dni": "047-0174800-8",
         "email": null,
         "creationDate": "2013-04-12",
-        "status": "A",
-        "actions": "01"
+        "status": "A"
       },
       {
         "npsv": "02",
@@ -45,8 +42,7 @@ const staticData = () => {
         "dni": "047-0203462-2",
         "email": "YOREPAROTUCAMARA@HOTMAIL.COM",
         "creationDate": "2013-04-13",
-        "status": "A",
-        "actions": "02"
+        "status": "A"
       },
       {
         "npsv": "03",
@@ -57,8 +53,7 @@ const staticData = () => {
         "dni": "047-0099264-9",
         "email": "TONYBEATOH@YAHOO.ES",
         "creationDate": "2013-04-13",
-        "status": "A",
-        "actions": "03"
+        "status": "A"
       },
       {
         "npsv": "04",
@@ -69,8 +64,7 @@ const staticData = () => {
         "dni": "047-0003907-8",
         "email": "INGCHINOLV@GMAIL.COM",
         "creationDate": "2013-04-15",
-        "status": "A",
-        "actions": "04"
+        "status": "A"
       }
 ]
   return [...data, ...data, ...data]

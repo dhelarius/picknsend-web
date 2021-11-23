@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import './App.css'
-import CustomerForm from './components/CustomerForm';
+import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
+import Loader, { LoaderModal } from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 
 function App() {
   const [isCustomerModal, setCustomerModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -15,7 +17,15 @@ function App() {
     setCustomerModal(false)
   }
 
-   const columns = React.useMemo(() => [
+  const showLoader = () => {
+    setIsLoading(true);
+  } 
+
+  const hideLoader = () => {
+    setIsLoading(false)
+  }
+
+  const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
     { Header: "Nombre", accessor: "name" },
     { Header: "Apellido", accessor: "lastName" },
@@ -25,7 +35,18 @@ function App() {
     { Header: "Email", accessor: "email" },
     { Header: "Fecha", accessor: "creationDate" },
     { Header: "Estado", accessor: "status", Cell: StatusPill },
-    { Header: "Acciones", accessor: "actions", Cell: Actions }
+    { 
+      Header: "Acciones", 
+      Cell: Actions, 
+      npsvAccessor: "npsv",
+      nameAccessor: "name",
+      lastnameAccessor: "lastName",
+      addressAccesor: "address",
+      phoneAccessor: "phone",
+      dniAccessor: "dni",
+      emailAccessor: "email",
+      statusAccessor: "status"
+    }
   ], 
   [])
 
@@ -40,12 +61,8 @@ function App() {
           </div>
         </main>
       </div>
-      {isCustomerModal && 
-      <div className="fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-30 px-4">
-        <div className="relative top-7 sm:top-1/4">
-          <CustomerForm hideCustomerModal={hideCustomerModal} />
-        </div>
-      </div>}
+      {isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />}
+      {isLoading && <LoaderModal hideLoader={hideLoader} />}
     </>
   )
 }

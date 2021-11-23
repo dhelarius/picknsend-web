@@ -5,7 +5,7 @@ const PicknsendButton = ({ children, className, ...rest }) => {
     return (
         <button
             type="button"
-            className="bg-picknsend hover:bg-picknsend-dark px-4 py-2 text-white font-medium shadow rounded-md"
+            className="btn-picknsend"
             {...rest}
         >
             {children}
