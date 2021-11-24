@@ -22,6 +22,10 @@
     @apply fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-30 px-4;
   }
 
+  .input-picknsend {
+    @apply border-0 rounded-md focus:border-picknsend focus:ring focus:ring-picknsend-light focus:ring-opacity-50;
+  }
+
   .lds-ellipsis {
     @apply inline-block relative w-20 h-20;
   }

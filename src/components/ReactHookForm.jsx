@@ -1,76 +1,38 @@
 import { XIcon } from "@heroicons/react/solid";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PicknsendButton } from "./Button";
 
-const CustomerForm = ({ customer, hideCustomerModal, showLoader }) => {
-    /*const [value, setValue] = useState('');
+const ReactHookForm = () => {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => console.log(data);
 
-    const { 
-        npsv,
-        name,
-        lastName,
-        address,
-        phone,
-        dni,
-        email,
-        status
-    } = customer;
-
-    const inputChangeHandler = (e) => {
-        setValue(e.target.value);
-    }
+    console.log(watch("example")); // watch input value by passing the name of it
 
     return (
-        <form action="" className="flex flex-col max-w-screen-sm mx-auto bg-white p-6 shadow rounded-md">
-            <div 
-                className="flex justify-center items-center self-end h-8 w-8 hover:bg-gray-100 text-gray-700 m-2 mb-4 rounded-md"
-                onClick={() => hideCustomerModal()}
-            >
-                <XIcon className="h-5 w-5" />
-            </div>
-            <div className="flex flex-col sm:flex-row sm:gap-x-4">
-                <input className="flex-grow input-picknsend sm:w-16 bg-gray-100" type="text" defaultValue={npsv} onBlur={inputChangeHandler} placeholder="npsv" readOnly={true} />
-                <input className="flex-grow input-picknsend mt-4 sm:mt-0 bg-gray-100" type="text" placeholder="Nombre" />
-                <input className="flex-grow input-picknsend mt-4 sm:mt-0 bg-gray-100" type="text" placeholder="Apellido" />
-            </div>
-            <input className="input-picknsend mt-4 bg-gray-100" type="text" placeholder="Dirección" />
-            <div className="flex flex-col sm:flex-row sm:gap-x-4">
-                <input className="flex-grow input-picknsend mt-4 bg-gray-100" type="tel" placeholder="Teléfono" />
-                <input className="flex-grow input-picknsend mt-4 bg-gray-100" type="text" placeholder="Cédula" />
-            </div>
-            <div className="flex flex-col sm:flex-row sm:gap-x-4">
-                <input className="flex-grow input-picknsend mt-4 bg-gray-100" type="email" placeholder="email@ejemplo.com" />
-                <select className="mt-4 bg-gray-100 input-picknsend text-gray-500">
-                    {["Activo", "Inactivo"].map(status => (
-                        <option key={status} value={status}>
-                            {status}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div className="text-center mt-6">
-                <PicknsendButton
-                    onClick={() => showLoader()}
-                >
-                    GUARDAR
-                </PicknsendButton>
-            </div>
+        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* register your input into the hook by invoking the "register" function */}
+          <input defaultValue="test" {...register("example")} />
+          
+          {/* include validation with required or other standard HTML validation rules */}
+          <input {...register("exampleRequired", { required: true })} />
+          {/* errors will return when field validation fails  */}
+          {errors.exampleRequired && <span>This field is required</span>}
+          
+          <input type="submit" />
         </form>
-    );*/
+    );
+}
 
+const SampleForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = data => { 
-        console.log(data);
-        showLoader(); 
-    }
+    const onSubmit = data => console.log(data);
 
     return (
         <form className="flex flex-col max-w-screen-sm mx-auto bg-white p-6 shadow rounded-md" onSubmit={handleSubmit(onSubmit)}>
             <div 
                 className="flex justify-center items-center self-end h-8 w-8 hover:bg-gray-100 text-gray-700 m-2 mb-4 rounded-md"
-                onClick={() => hideCustomerModal()}
             >
                 <XIcon className="h-5 w-5" />
             </div>
@@ -134,16 +96,6 @@ const CustomerForm = ({ customer, hideCustomerModal, showLoader }) => {
     );
 }
 
-const CustomerFormModal = ({ customer, hideCustomerModal, showLoader }) => {
-    return (
-        <div className="bg-modal">
-            <div className="relative top-7 sm:top-1/4">
-                <CustomerForm customer={customer} hideCustomerModal={hideCustomerModal} showLoader={showLoader} />
-            </div>
-        </div>
-    );
-}
+export { SampleForm }
 
-export { CustomerFormModal }
-
-export default CustomerForm
+export default ReactHookForm

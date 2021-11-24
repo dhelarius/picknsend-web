@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
 import Loader, { LoaderModal } from './components/Loader';
+import ReactHookForm, { SampleForm } from './components/ReactHookForm';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 
@@ -63,6 +64,10 @@ function App() {
       </div>
       {isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />}
       {isLoading && <LoaderModal hideLoader={hideLoader} />}
+      {/*<ReactHookForm />*/}
+      {/*<div className="min-h-screen bg-gray-100 text-gray-dark pt-8">
+        <SampleForm />
+    </div>*/}
     </>
   )
 }
