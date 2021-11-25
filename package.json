@@ -1,14 +1,19 @@
 {
   "name": "react-vite-template",
-  "version": "0.1.0-alpha",
+  "version": "0.2.0-prealfa",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.5",
+    "@tailwindcss/forms": "^0.3.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.20.2",
+    "react-table": "^7.7.0",
+    "regenerator-runtime": "^0.13.9",
     "stylelint": "^14.1.0"
   },
   "devDependencies": {
