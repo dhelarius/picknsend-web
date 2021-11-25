@@ -67,7 +67,7 @@ function App() {
       {/*<ReactHookForm />*/}
       {/*<div className="min-h-screen bg-gray-100 text-gray-dark pt-8">
         <SampleForm />
-    </div>*/}
+      </div>*/}
     </>
   )
 }
