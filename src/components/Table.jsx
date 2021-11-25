@@ -116,7 +116,7 @@ const Table = ({ columns, data, showCustomerModal }) => {
 
     return (
         <>
-            <div className="flex justify-between">
+           <div className="flex justify-between">
                 <GlobalFilter 
                     preGlobalFilteredRows={preGlobalFilteredRows}
                     globalFilter={state.globalFilter}
@@ -135,33 +135,35 @@ const Table = ({ columns, data, showCustomerModal }) => {
                 <div className="-my-2 sm:-mx-6 lg:-mx-8">
                     <div className="py-2 overflow-x-auto align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-md">
-                            <table {...getTableProps} className="min-w-full divide-y divide-gray-200">
+                            <table {...getTableProps} className="table-auto min-w-full divide-y divide-gray-200">
                             <thead className="bg-white">
                                 {
                                     headerGroups.map(headerGroup => (
-                                        <tr {...headerGroup.getHeaderGroupProps()}>
-                                            {
-                                                headerGroup.headers.map(column => (
-                                                    <th 
-                                                        scope="col"
-                                                        className="group px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        {...column.getHeaderProps(column.getSortByToggleProps())}
-                                                    >
-                                                        <div className="flex items-center justify-between">
-                                                            {column.render('Header')}
-                                                            <span>
-                                                                {column.isSorted
-                                                                ? column.isSortedDesc
-                                                                ? <SortDownIcon className="w-4 h-4 text-gray-400" />
-                                                                : <SortUpIcon className="w-4 h-4 text-gray-400" />
-                                                                : (
-                                                                    <SortIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100" />
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                    </th>
-                                            ))}
-                                        </tr>    
+                                    <tr {...headerGroup.getHeaderGroupProps()}>
+                                        {
+                                            headerGroup.headers.map(column => (
+                                            <th 
+                                                scope="col"
+                                                className="group px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                {...column.getHeaderProps(column.getSortByToggleProps())}
+                                            >
+                                                <div 
+                                                    className="flex items-center justify-between"
+                                                >
+                                                    {column.render('Header')}
+                                                    <span>
+                                                        {column.isSorted
+                                                        ? column.isSortedDesc
+                                                        ? <SortDownIcon className="w-4 h-4 text-gray-400" />
+                                                        : <SortUpIcon className="w-4 h-4 text-gray-400" />
+                                                        : (
+                                                            <SortIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100" />
+                                                        )}
+                                                    </span>
+                                                </div>
+                                            </th>
+                                        ))}
+                                    </tr>    
                                 ))}
                             </thead>
                             <tbody 
@@ -169,24 +171,24 @@ const Table = ({ columns, data, showCustomerModal }) => {
                                 className="bg-white divide-y divide-gray-200"
                             >
                                 {
-                                    page.map(row => {
-                                        prepareRow(row)
-                                        return (
-                                            <tr {...row.getRowProps()}>
-                                                {
-                                                    row.cells.map(cell => {
-                                                        return (
-                                                            <td 
-                                                                {...cell.getCellProps()}
-                                                                className="px-4 py-1 whitespace-nowrap"
-                                                            >
-                                                                <div className="text-xs text-gray-500">{cell.render('Cell')}</div>
-                                                            </td>
-                                                        )
-                                                    })}
-                                            </tr>
-                                        )
-                                    })}                        
+                                page.map(row => {
+                                    prepareRow(row)
+                                    return (
+                                        <tr {...row.getRowProps()}>
+                                            {
+                                                row.cells.map(cell => {
+                                                    return (
+                                                        <td 
+                                                            {...cell.getCellProps()}
+                                                            className="px-4 py-1"
+                                                        >
+                                                            <div className="text-xs text-gray-500">{cell.render('Cell')}</div>
+                                                        </td>
+                                                    )
+                                                })}
+                                        </tr>
+                                    )
+                                })}                        
                             </tbody>
                             </table>
                         </div>
