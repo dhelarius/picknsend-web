@@ -7,6 +7,7 @@ import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
 import { CustomerFormModal } from "./CustomerForm";
 import { deleteCustomer } from "../hooks/customer";
+import DeleteDialog from "./DeleteDialog";
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -56,19 +57,17 @@ const StatusPill = ({ value }) => {
 }
 
 const Actions = ({ column, row }) => {
-    const [isCustomerModal, setCustomerModal] = useState(false);
+    const [open, setOpen] = useState(false);
 
-    const showCustomerModal = () => {
-        setCustomerModal(true);
+    const handleOpen = () => {
+        setOpen(true);
     }
-    
-    const hideCustomerModal = () => {
-        setCustomerModal(false)
+
+    const handleClose = () => {
+        setOpen(false);
     }
 
     let customer = row.values;
-
-    const { npsv } = customer;
 
     return (
         <>
@@ -81,12 +80,12 @@ const Actions = ({ column, row }) => {
                 </div>
                 <div 
                     className="text-error hover:bg-gray-100 p-1 rounded-md"
-                    onClick={() => deleteCustomer(npsv) /*console.log(`Eliminar ${customer.npsv}`)*/}
+                    onClick={handleOpen}
                 >
                     <TrashIcon className="h-5 w-5" />
                 </div>
             </div>
-            {isCustomerModal && <CustomerFormModal customer={customer} hideCustomerModal={hideCustomerModal} />}
+            <DeleteDialog open={open} handleClose={handleClose} customer={customer} />
         </>
     );
 }

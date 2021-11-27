@@ -6,6 +6,7 @@ import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 import { useCustomers } from './hooks/customer';
 import ModalLoader from './components/LoaderModal';
+import DeleteDialog from './components/DeleteDialog';
 
 function App() {
   const [isCustomerModal, setCustomerModal] = useState(false);
@@ -63,8 +64,9 @@ function App() {
           </div>
         </main>
       </div>
-      {isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />}
+      {/*isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />*/}
       <LoaderModal loading={loading} hideLoader={hideLoader} />
+    {/*<DeleteDialog />*/}
     </>
   )
 }

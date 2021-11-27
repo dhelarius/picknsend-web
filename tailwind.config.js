@@ -21,7 +21,10 @@ module.exports = {
         },
         white: '#ffffff',
         cream: '#e1d0a5',
-        error: '#c13832',
+        error: {
+          DEFAULT: '#c13832',
+          dark: '#b2352e'
+        },
         warning: '#ffe614',
         success: '#03af43'
       }

@@ -4,22 +4,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/*body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}*/
+} */
 
+/* Buttons */
 @layer components {
+  .btn {
+    @apply py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md;
+  }
+
+  .btn-error {
+    @apply bg-error hover:bg-error-dark text-white shadow;
+  }
+
   .btn-picknsend {
     @apply bg-picknsend hover:bg-picknsend-dark px-4 py-2 text-white text-sm font-medium shadow rounded-md;
   }
+}
+
+@layer components {
+  .surface {
+    @apply bg-white p-4 rounded-md shadow;
+  }
 
   .bg-modal {
-    @apply fixed top-0 left-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-30 px-4;
+    @apply flex z-10 justify-center items-center fixed top-0 left-0 w-full h-full overflow-auto bg-black bg-opacity-30 px-4;
   }
 
   .input-picknsend {
@@ -52,6 +67,10 @@
 }
 
 @layer utilities {
+  .w-104 {
+    width: 480px;
+  }
+
   .anim-ellipsis-1 {
     animation: lds-ellipsis1 0.6s infinite;
   }
