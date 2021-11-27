@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
-import Loader, { LoaderModal } from './components/Loader';
-import ReactHookForm, { SampleForm } from './components/ReactHookForm';
+import LoaderModal from './components/LoaderModal';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
+import { useCustomers } from './hooks/customer';
+import ModalLoader from './components/LoaderModal';
 
 function App() {
   const [isCustomerModal, setCustomerModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -19,11 +20,11 @@ function App() {
   }
 
   const showLoader = () => {
-    setIsLoading(true);
+    setLoading(true);
   } 
 
   const hideLoader = () => {
-    setIsLoading(false)
+    setLoading(false)
   }
 
   const columns = React.useMemo(() => [
@@ -51,23 +52,19 @@ function App() {
   ], 
   [])
 
-  const data = React.useMemo(() => staticData(), []);
+  const customers =  useCustomers();
 
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-dark">
         <main className="sm:px-6 lg:px-8 pt-4">
           <div className="mt-4">
-            <Table columns={columns} data={data} showCustomerModal={showCustomerModal} />
+            <Table columns={columns} data={customers} showCustomerModal={showCustomerModal} />
           </div>
         </main>
       </div>
       {isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />}
-      {isLoading && <LoaderModal hideLoader={hideLoader} />}
-      {/*<ReactHookForm />*/}
-      {/*<div className="min-h-screen bg-gray-100 text-gray-dark pt-8">
-        <SampleForm />
-      </div>*/}
+      <LoaderModal loading={loading} hideLoader={hideLoader} />
     </>
   )
 }

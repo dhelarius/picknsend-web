@@ -6,6 +6,7 @@ import { classNames } from "../shared/utils";
 import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
 import { CustomerFormModal } from "./CustomerForm";
+import { deleteCustomer } from "../hooks/customer";
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -67,6 +68,8 @@ const Actions = ({ column, row }) => {
 
     let customer = row.values;
 
+    const { npsv } = customer;
+
     return (
         <>
             <div className="flex gap-x-4">
@@ -78,7 +81,7 @@ const Actions = ({ column, row }) => {
                 </div>
                 <div 
                     className="text-error hover:bg-gray-100 p-1 rounded-md"
-                    onClick={() => console.log(`Eliminar ${customer.npsv}`)}
+                    onClick={() => deleteCustomer(npsv) /*console.log(`Eliminar ${customer.npsv}`)*/}
                 >
                     <TrashIcon className="h-5 w-5" />
                 </div>
