@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
 import LoaderModal from './components/LoaderModal';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 import { useCustomers } from './hooks/customer';
-import ModalLoader from './components/LoaderModal';
-import DeleteDialog from './components/DeleteDialog';
 
 function App() {
+  const [deleted, setDeleted] = useState(false);
   const [isCustomerModal, setCustomerModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -28,6 +27,10 @@ function App() {
     setLoading(false)
   }
 
+  const handleDeleted = (isDeleted) => {
+    setDeleted(isDeleted);
+  }
+
   const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
     { Header: "Nombre", accessor: "name" },
@@ -40,7 +43,7 @@ function App() {
     { Header: "Estado", accessor: "status", Cell: StatusPill },
     { 
       Header: "Acciones", 
-      Cell: Actions, 
+      Cell: Actions,
       npsvAccessor: "npsv",
       nameAccessor: "name",
       lastnameAccessor: "lastName",
@@ -48,25 +51,25 @@ function App() {
       phoneAccessor: "phone",
       dniAccessor: "dni",
       emailAccessor: "email",
-      statusAccessor: "status"
+      statusAccessor: "status",
+      handleDeleted: handleDeleted
     }
   ], 
   [])
 
-  const customers =  useCustomers();
+  const data = useCustomers(deleted);
 
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-dark">
         <main className="sm:px-6 lg:px-8 pt-4">
           <div className="mt-4">
-            <Table columns={columns} data={customers} showCustomerModal={showCustomerModal} />
+            <Table columns={columns} data={data} showCustomerModal={showCustomerModal} />
           </div>
         </main>
       </div>
       {/*isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />*/}
       <LoaderModal loading={loading} hideLoader={hideLoader} />
-    {/*<DeleteDialog />*/}
     </>
   )
 }

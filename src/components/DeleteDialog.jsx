@@ -1,5 +1,13 @@
-const DeleteDialog = ({ open, handleClose, customer }) => {
+import { deleteCustomer } from "../hooks/customer";
+
+const DeleteDialog = ({ open, handleClose, handleDeleted, customer }) => {
     const { npsv } = customer
+
+    const handleDelete = () => {
+        deleteCustomer(npsv);
+        handleDeleted();
+        handleClose();
+    }
 
     return (
         <>
@@ -16,7 +24,7 @@ const DeleteDialog = ({ open, handleClose, customer }) => {
                         >Cancelar</button>
                         <button 
                             className="btn btn-error"
-                            onClick={() => console.log(`Eliminar ${npsv}`)}
+                            onClick={handleDelete}
                         >Eliminar</button>
                     </div>
                 </div>

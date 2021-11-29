@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import customer from "../service/customer";
 
-const useCustomers = () => {
+const useCustomers = (deleted) => {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
         customer.getCustomers().then(response => {
             setCustomers(response.data);
         });
-    }, [])
+    }, [deleted])
 
     if(!customers) return null;
 

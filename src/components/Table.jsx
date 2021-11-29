@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "regenerator-runtime";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusSmIcon, TrashIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination } from "react-table";
@@ -58,6 +58,7 @@ const StatusPill = ({ value }) => {
 
 const Actions = ({ column, row }) => {
     const [open, setOpen] = useState(false);
+    const [deleted, setDeleted] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -67,14 +68,23 @@ const Actions = ({ column, row }) => {
         setOpen(false);
     }
 
+    const handleDeleted = () => {
+        setDeleted(!deleted);
+    }
+
     let customer = row.values;
+
+    useEffect(() => {
+        column.handleDeleted(deleted);
+        console.log(`${customer.npsv}: has been deleted.`);
+    }, [deleted]);
 
     return (
         <>
             <div className="flex gap-x-4">
                 <div 
                     className="text-blue hover:bg-gray-100 p-1 rounded-md"
-                    onClick={() => showCustomerModal()}
+                    onClick={() => console.log('Mostrar ventana de edición de cliente')}
                 >
                     <PencilIcon className="h-5 w-5" />
                 </div>
@@ -85,7 +95,7 @@ const Actions = ({ column, row }) => {
                     <TrashIcon className="h-5 w-5" />
                 </div>
             </div>
-            <DeleteDialog open={open} handleClose={handleClose} customer={customer} />
+            <DeleteDialog open={open} handleClose={handleClose} handleDeleted={handleDeleted} customer={customer} />
         </>
     );
 }
