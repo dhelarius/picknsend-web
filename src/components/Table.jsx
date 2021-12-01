@@ -5,7 +5,7 @@ import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination }
 import { classNames } from "../shared/utils";
 import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
-import { CustomerFormModal } from "./CustomerForm";
+import CustomerForm, { CustomerFormModal } from "./CustomerForm";
 import { deleteCustomer } from "../hooks/customer";
 import DeleteDialog from "./DeleteDialog";
 
@@ -57,26 +57,30 @@ const StatusPill = ({ value }) => {
 }
 
 const Actions = ({ column, row }) => {
-    const [open, setOpen] = useState(false);
+    let customer = row.values;
+    const { npsv } = customer;
+    const { handleOpenLoader, handleCloseLoader } = column.loaderProps;
+
+    const [openDialog, setOpenDialog] = useState(false);
     const [deleted, setDeleted] = useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
     }
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     }
 
-    const handleDeleted = () => {
-        setDeleted(!deleted);
+    const deleteCustomerByNpsv = () => {
+        handleOpenLoader();
+        deleteCustomer(npsv, handleCloseLoader);
+        setDeleted(!deleted)
     }
-
-    let customer = row.values;
 
     useEffect(() => {
         column.handleDeleted(deleted);
-        console.log(`${customer.npsv}: has been deleted.`);
+        console.log(`${npsv}: has been deleted.`);
     }, [deleted]);
 
     return (
@@ -90,12 +94,16 @@ const Actions = ({ column, row }) => {
                 </div>
                 <div 
                     className="text-error hover:bg-gray-100 p-1 rounded-md"
-                    onClick={handleOpen}
+                    onClick={handleOpenDialog}
                 >
                     <TrashIcon className="h-5 w-5" />
                 </div>
             </div>
-            <DeleteDialog open={open} handleClose={handleClose} handleDeleted={handleDeleted} customer={customer} />
+            <DeleteDialog 
+                open={openDialog} 
+                onClose={handleCloseDialog} 
+                action={deleteCustomerByNpsv}
+            />
         </>
     );
 }

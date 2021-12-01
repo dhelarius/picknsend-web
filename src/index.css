@@ -46,7 +46,7 @@
   }
 
   .lds-ellipsis div {
-    @apply absolute top-8 w-3 h-3 rounded-full bg-white  anim-timing-function;
+    @apply absolute top-8 w-3 h-3 rounded-full bg-picknsend  anim-timing-function;
   }
 
   .lds-ellipsis div:nth-child(1) {

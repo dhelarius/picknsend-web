@@ -40,6 +40,11 @@ const useCustomer = (npsv) => {
     return isDelete;
 }*/
 
-const deleteCustomer = (npsv) => customer.deleteCustomer(npsv);
+const deleteCustomer = (npsv, callback) => customer.deleteCustomer(npsv).then(response => {
+    let deleted = response.data;
+    if (deleted) {
+        callback();
+    }
+}).catch(err => callback());
 
 export { useCustomers, useCustomer, deleteCustomer }

@@ -1,12 +1,9 @@
-import { deleteCustomer } from "../hooks/customer";
 
-const DeleteDialog = ({ open, handleClose, handleDeleted, customer }) => {
-    const { npsv } = customer
+const DeleteDialog = ({ open, onClose, action }) => {
 
-    const handleDelete = () => {
-        deleteCustomer(npsv);
-        handleDeleted();
-        handleClose();
+    const handleAction = () => {
+        action()
+        onClose();
     }
 
     return (
@@ -20,11 +17,11 @@ const DeleteDialog = ({ open, handleClose, handleDeleted, customer }) => {
                     <div className="flex justify-end gap-4">
                         <button 
                             className="btn"
-                            onClick={handleClose}
+                            onClick={onClose}
                         >Cancelar</button>
                         <button 
                             className="btn btn-error"
-                            onClick={handleDelete}
+                            onClick={handleAction}
                         >Eliminar</button>
                     </div>
                 </div>

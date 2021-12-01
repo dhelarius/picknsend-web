@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './App.css'
 import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
-import LoaderModal from './components/LoaderModal';
+import Loader from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 import { useCustomers } from './hooks/customer';
@@ -9,7 +9,7 @@ import { useCustomers } from './hooks/customer';
 function App() {
   const [deleted, setDeleted] = useState(false);
   const [isCustomerModal, setCustomerModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [openLoader, setOpenLoader] = useState(false);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -19,16 +19,13 @@ function App() {
     setCustomerModal(false)
   }
 
-  const showLoader = () => {
-    setLoading(true);
-  } 
-
-  const hideLoader = () => {
-    setLoading(false)
-  }
-
   const handleDeleted = (isDeleted) => {
     setDeleted(isDeleted);
+  }
+
+  const loaderProps = {
+    handleOpenLoader: () => setOpenLoader(true),
+    handleCloseLoader: () => setOpenLoader(false)
   }
 
   const columns = React.useMemo(() => [
@@ -52,7 +49,8 @@ function App() {
       dniAccessor: "dni",
       emailAccessor: "email",
       statusAccessor: "status",
-      handleDeleted: handleDeleted
+      handleDeleted: handleDeleted,
+      loaderProps: loaderProps
     }
   ], 
   [])
@@ -69,7 +67,7 @@ function App() {
         </main>
       </div>
       {/*isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />*/}
-      <LoaderModal loading={loading} hideLoader={hideLoader} />
+      <Loader open={openLoader} />
     </>
   )
 }

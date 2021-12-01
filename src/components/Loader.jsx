@@ -1,23 +1,21 @@
-const Loader = () => {
+const Ellipsis = () => {
     return (
         <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     );
 }
 
-const LoaderModal = ({ loading, hideLoader }) => {
-    const timeOut = setTimeout(() => {hideLoader();}, 3000);
+const Loader = ({ open/*, onClose*/ }) => {
+    //const timeOut = setTimeout(() => {onClose();}, 3000);
     
     return (
         <>
-            {loading && <div className="bg-modal">
+            {open && <div className="bg-modal bg-white">
                 <div className="flex justify-center items-center min-h-full">
-                    <Loader />
+                    <Ellipsis />
                 </div>
             </div>}
         </>
     );
 }
 
-export { Loader }
-
-export default LoaderModal
+export default Loader
