@@ -60,6 +60,7 @@ const Actions = ({ column, row }) => {
     let customer = row.values;
     const { npsv } = customer;
     const { handleOpenLoader, handleCloseLoader } = column.loaderProps;
+    const handleOpenPopover = column.handleOpenPopover;
 
     const [openDialog, setOpenDialog] = useState(false);
     const [deleted, setDeleted] = useState(false);
@@ -72,9 +73,14 @@ const Actions = ({ column, row }) => {
         setOpenDialog(false);
     }
 
+    const deleteCustomerSuccess = () => {
+        handleCloseLoader();
+        handleOpenPopover();
+    }
+
     const deleteCustomerByNpsv = () => {
         handleOpenLoader();
-        deleteCustomer(npsv, handleCloseLoader);
+        deleteCustomer(npsv, deleteCustomerSuccess);
         setDeleted(!deleted)
     }
 

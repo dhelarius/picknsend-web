@@ -5,11 +5,13 @@ import Loader from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 import { useCustomers } from './hooks/customer';
+import Popover from './components/common/Popover/Popover';
 
 function App() {
   const [deleted, setDeleted] = useState(false);
   const [isCustomerModal, setCustomerModal] = useState(false);
   const [openLoader, setOpenLoader] = useState(false);
+  const [openPopover, setOpenPopover] = useState(false);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -26,6 +28,14 @@ function App() {
   const loaderProps = {
     handleOpenLoader: () => setOpenLoader(true),
     handleCloseLoader: () => setOpenLoader(false)
+  }
+
+  const handleOpenPopover = () => {
+    setOpenPopover(true);
+  }
+
+  const handleClosePopover = () => {
+    setOpenPopover(false);
   }
 
   const columns = React.useMemo(() => [
@@ -50,6 +60,7 @@ function App() {
       emailAccessor: "email",
       statusAccessor: "status",
       handleDeleted: handleDeleted,
+      handleOpenPopover: handleOpenPopover,
       loaderProps: loaderProps
     }
   ], 
@@ -68,6 +79,15 @@ function App() {
       </div>
       {/*isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />*/}
       <Loader open={openLoader} />
+      <Popover 
+        open={openPopover} 
+        onClose={handleClosePopover}
+        severity='success'
+        message='El elemento ha sido eliminado exitosamente'
+        align='right'
+        duration={6000} 
+      />
+      {/*<button className='absolute top-48 mx-auto' onClick={handleOpenPopover}>Open popover</button>*/}
     </>
   )
 }

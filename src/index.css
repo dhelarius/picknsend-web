@@ -67,6 +67,11 @@
 }
 
 @layer utilities {
+  .center-fixed {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .w-104 {
     width: 480px;
   }
