@@ -4,7 +4,7 @@ import CustomerForm, { CustomerFormDialog } from './components/CustomerForm';
 import Loader from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
-import { useCustomers } from './hooks/customer';
+import { useCustomers } from './hooks/hook-customer';
 import Popover from './components/common/Popover/Popover';
 
 function App() {
@@ -95,13 +95,7 @@ function App() {
         align='right'
         duration={6000} 
       />
-    {/*<div className='bg-gray-100'>
-      <div className='flex justify-center items-center sm:h-screen md:max-w-screen-md md:mx-auto py-4 mx-4'>
-        <CustomerForm open={openCustomerForm} onClose={handleCloseCustomerForm} />
-      </div>
-</div>*/}
       <CustomerFormDialog open={openCustomerForm} onClose={handleCloseCustomerForm} />
-      {/*<button onClick={handleOpenCustomerForm}>Open Form</button>*/}
     </>
   )
 }

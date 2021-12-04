@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from "react";
 import customer from "../service/customer";
 
+const useCreateCustomer = (cb) => {
+    const [newCustomer, setNewCustomer] = useState(null);
+
+    useEffect(() => {
+        if (newCustomer) {
+            customer.createCustomer(newCustomer).then(response => {
+                console.log(response.data);
+                cb();
+            });
+        }
+    }, [newCustomer]);
+
+    return { setNewCustomer };
+}
+
 const useCustomers = (deleted) => {
     const [customers, setCustomers] = useState([]);
 
@@ -47,4 +62,4 @@ const deleteCustomer = (npsv, callback) => customer.deleteCustomer(npsv).then(re
     }
 }).catch(err => callback());
 
-export { useCustomers, useCustomer, deleteCustomer }
+export { useCreateCustomer, useCustomers, useCustomer, deleteCustomer }

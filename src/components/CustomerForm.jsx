@@ -1,6 +1,8 @@
 import { XIcon } from "@heroicons/react/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useCreateCustomer } from "../hooks/hook-customer";
+import date from "../utils/date";
 import { PicknsendButton } from "./Button";
 
 const Field = (props) => {
@@ -39,9 +41,15 @@ const CustomerForm = ({ onClose }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = data => { 
-        console.log(data);
-        //showLoader(); 
+    const handleSuccess = () => {
+        onClose();
+    }
+
+    const { setNewCustomer } = useCreateCustomer(handleSuccess);
+
+    const onSubmit = data => {
+        data.creationDate = date.now();
+        setNewCustomer(data);
     }
 
     return (
@@ -125,7 +133,7 @@ const CustomerForm = ({ onClose }) => {
                         <Field type="text" id="fname" label="Nombre" register={{...register("name", { required: true })}} error={errors.name} placeholder="e.g José" />
                     </div>
                     <div className="sm:flex-grow">
-                        <Field type="text" id="flastname" label="Apellido" register={{...register("lastname", { required: true })}} error={errors.lastname} placeholder="e.g Gutierrez" />
+                        <Field type="text" id="flastname" label="Apellido" register={{...register("lastName", { required: true })}} error={errors.lastName} placeholder="e.g Gutierrez" />
                     </div>
                 </div>
                 <div>
@@ -146,9 +154,10 @@ const CustomerForm = ({ onClose }) => {
                     <div className="flex flex-col">
                         <label className="mb-1 text-md font-medium text-gray-700" htmlFor="status">Estado</label>
                         <select className="input-picknsend bg-gray-100 text-gray-500 sm:mt-1" id="status" {...register("status")}>
-                            {["Activo", "Inactivo"].map(status => (
-                                <option key={status} value={status}>
-                                    {status}
+                            {[{id: 1, description: 'Activo', value: 'A'}, 
+                              {id: 2, description: 'Inactivo', value: 'I'}].map(status => (
+                                <option key={status.id} value={status.value}>
+                                    {status.description}
                                 </option>
                             ))}
                         </select>

@@ -6,7 +6,7 @@ import { classNames } from "../shared/utils";
 import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
 import CustomerForm, { CustomerFormDialog } from "./CustomerForm";
-import { deleteCustomer } from "../hooks/customer";
+import { deleteCustomer } from "../hooks/hook-customer";
 import DeleteDialog from "./DeleteDialog";
 
 const GlobalFilter = ({
