@@ -9,7 +9,7 @@ const Loader = ({ open/*, onClose*/ }) => {
     
     return (
         <>
-            {open && <div className="bg-modal bg-white">
+            {open && <div className="bg-modal bg-white z-50">
                 <div className="flex justify-center items-center min-h-full">
                     <Ellipsis />
                 </div>

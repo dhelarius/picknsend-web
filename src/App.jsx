@@ -6,13 +6,13 @@ import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
 import { useCustomers } from './hooks/hook-customer';
 import Popover from './components/common/Popover/Popover';
+import { usePopover } from './hooks/hook-popover';
 
 function App() {
   const [deleted, setDeleted] = useState(false);
   const [isCustomerModal, setCustomerModal] = useState(false);
   const [openCustomerForm, setOpenCustomerForm] = useState(false);
   const [openLoader, setOpenLoader] = useState(false);
-  const [openPopover, setOpenPopover] = useState(false);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -39,13 +39,25 @@ function App() {
     handleCloseLoader: () => setOpenLoader(false)
   }
 
-  const handleOpenPopover = () => {
-    setOpenPopover(true);
-  }
+  const { 
+    handleOpenPopover: handleOpenPopoverSuccessDelete, 
+    handleClosePopover: handleClosePopoverSuccessDelete, 
+    popoverProps: popoverSuccessDeleteProps } = usePopover({ 
+    severity: 'success',
+    message: 'El elemento ha sido eliminado exitosamente',
+    align: 'right',
+    duration: 6000  
+  });
 
-  const handleClosePopover = () => {
-    setOpenPopover(false);
-  }
+  const { 
+    handleOpenPopover: handleOpenPopoverSuccessCreate, 
+    handleClosePopover: handleClosePopoverSuccessCreate, 
+    popoverProps: popoverSuccessCreateProps } = usePopover({ 
+    severity: 'success',
+    message: 'El elemento ha sido creado exitosamente',
+    align: 'right',
+    duration: 6000  
+  });
 
   const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
@@ -69,7 +81,7 @@ function App() {
       emailAccessor: "email",
       statusAccessor: "status",
       handleDeleted: handleDeleted,
-      handleOpenPopover: handleOpenPopover,
+      handleOpenPopover: handleOpenPopoverSuccessDelete,
       loaderProps: loaderProps
     }
   ], 
@@ -88,14 +100,19 @@ function App() {
       </div>
       <Loader open={openLoader} />
       <Popover 
-        open={openPopover} 
-        onClose={handleClosePopover}
-        severity='success'
-        message='El elemento ha sido eliminado exitosamente'
-        align='right'
-        duration={6000} 
+        onClose={handleClosePopoverSuccessCreate}
+        {...popoverSuccessCreateProps}
       />
-      <CustomerFormDialog open={openCustomerForm} onClose={handleCloseCustomerForm} />
+      <Popover 
+        onClose={handleClosePopoverSuccessDelete}
+        {...popoverSuccessDeleteProps}
+      />
+      <CustomerFormDialog 
+        open={openCustomerForm} 
+        onClose={handleCloseCustomerForm}
+        onLoader={setOpenLoader}
+        handleOpenPopover={handleOpenPopoverSuccessCreate}
+      />
     </>
   )
 }

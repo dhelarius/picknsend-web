@@ -21,7 +21,7 @@ const Field = (props) => {
     );
 }
 
-const CustomerForm = ({ onClose }) => {
+const CustomerForm = ({ onClose, onLoader, handleOpenPopover }) => {
     /*const [value, setValue] = useState('');
 
     const { 
@@ -42,12 +42,15 @@ const CustomerForm = ({ onClose }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleSuccess = () => {
+        onLoader(false);
         onClose();
+        handleOpenPopover();
     }
 
     const { setNewCustomer } = useCreateCustomer(handleSuccess);
 
     const onSubmit = data => {
+        onLoader(true);
         data.creationDate = date.now();
         setNewCustomer(data);
     }
@@ -175,12 +178,12 @@ const CustomerForm = ({ onClose }) => {
     );
 }
 
-const CustomerFormDialog = ({ open , onClose }) => {
+const CustomerFormDialog = ({ open , onClose, onLoader, handleOpenPopover }) => {
     return (
         <>
             {open && <div className="bg-modal">
                 <div className="sm:max-w-screen-md w-full">
-                    <CustomerForm onClose={onClose} />
+                    <CustomerForm onClose={onClose} onLoader={onLoader} handleOpenPopover={handleOpenPopover} />
                 </div>
             </div>}
         </>
