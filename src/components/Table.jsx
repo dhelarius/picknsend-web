@@ -75,18 +75,18 @@ const Actions = ({ column, row }) => {
 
     const deleteCustomerSuccess = () => {
         handleCloseLoader();
+        setDeleted(!deleted);
         handleOpenPopover();
+        console.log(`${npsv}: has been deleted.`);
     }
 
     const deleteCustomerByNpsv = () => {
         handleOpenLoader();
         deleteCustomer(npsv, deleteCustomerSuccess);
-        setDeleted(!deleted);
     }
 
     useEffect(() => {
         column.handleDeleted(deleted);
-        console.log(`${npsv}: has been deleted.`);
     }, [deleted]);
 
     return (

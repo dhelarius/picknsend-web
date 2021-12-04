@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import CustomerForm, { CustomerFormDialog } from './components/CustomerForm';
 import Loader from './components/Loader';
@@ -22,8 +22,8 @@ function App() {
     setCustomerModal(false)
   }
 
-  const handleDeleted = (isDeleted) => {
-    setDeleted(isDeleted);
+  const handleDeleted = (deleted) => {
+    setDeleted(deleted);
   }
 
   const handleUpdate = () => {
@@ -93,6 +93,10 @@ function App() {
   [])
 
   const data = useCustomers(deleted, update);
+
+  useEffect(() => {
+    console.log(`deleted: ${deleted}`);
+  }, [deleted]);
 
   return (
     <>
