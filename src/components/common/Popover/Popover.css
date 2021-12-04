@@ -7,21 +7,21 @@
 @keyframes translate {
   0% {
     top: -48px;
-    opacity: 0.5;
+    opacity: 0;
   }
 
-  12% {
+  8% {
     top: 16px;
     opacity: 1;
   }
 
-  88% {
+  92% {
     top: 16px;
     opacity: 1;
   }
 
   100% {
     top: -48px;
-    opacity: 0.5;
+    opacity: 0;
   }
 }

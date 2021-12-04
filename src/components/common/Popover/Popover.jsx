@@ -1,5 +1,5 @@
 import { CheckCircleIcon, ExclamationCircleIcon, ExclamationIcon, XIcon } from "@heroicons/react/solid";
-import { async } from "regenerator-runtime";
+import Expire from "../Expire";
 import './Popover.css'
 
 const status = {
@@ -32,11 +32,10 @@ const Popover = ({ open, onClose, severity, align, message, duration }) => {
                      align === alignment.center ? 'center-fixed' :
                      'right-4'
 
-    const timeout = setTimeout(() => onClose(), duration);
-
     return (
         <>
-        {open && <div 
+        {open && <Expire delay={duration} callback={onClose}>
+        <div 
             className={["fixed flex items-center gap-2 h-12 px-4 rounded-md shadow-md animate-translate", background, position].join(' ')} 
             style={{ animationDuration: `${duration}ms` }}    
         >
@@ -46,9 +45,10 @@ const Popover = ({ open, onClose, severity, align, message, duration }) => {
             {message}
             {onClose && <div 
                 className="w-5 h-5 p-1 rounded-full hover:bg-green-200"
-                onClick={() => { clearTimeout(timeout); onClose(); }}
+                onClick={() => { onClose(); }}
             ><XIcon /></div>}
-        </div>}
+        </div>
+        </Expire>}
         </>
     );
 }
