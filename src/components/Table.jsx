@@ -5,7 +5,7 @@ import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination }
 import { classNames } from "../shared/utils";
 import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
-import CustomerForm, { CustomerFormModal } from "./CustomerForm";
+import CustomerForm, { CustomerFormDialog } from "./CustomerForm";
 import { deleteCustomer } from "../hooks/customer";
 import DeleteDialog from "./DeleteDialog";
 
@@ -114,7 +114,7 @@ const Actions = ({ column, row }) => {
     );
 }
 
-const Table = ({ columns, data, showCustomerModal }) => {
+const Table = ({ columns, data, onDialog }) => {
     const instance = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
 
     const {
@@ -149,7 +149,7 @@ const Table = ({ columns, data, showCustomerModal }) => {
                     setGlobalFilter={setGlobalFilter}
                 />
                 <PicknsendButton
-                    onClick={() => showCustomerModal()}
+                    onClick={onDialog}
                 >
                     <div className="flex items-center">
                         <PlusSmIcon className="h-6 w-6" />

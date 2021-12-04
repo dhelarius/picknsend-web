@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
-import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
+import CustomerForm, { CustomerFormDialog } from './components/CustomerForm';
 import Loader from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
@@ -10,6 +10,7 @@ import Popover from './components/common/Popover/Popover';
 function App() {
   const [deleted, setDeleted] = useState(false);
   const [isCustomerModal, setCustomerModal] = useState(false);
+  const [openCustomerForm, setOpenCustomerForm] = useState(false);
   const [openLoader, setOpenLoader] = useState(false);
   const [openPopover, setOpenPopover] = useState(false);
 
@@ -23,6 +24,14 @@ function App() {
 
   const handleDeleted = (isDeleted) => {
     setDeleted(isDeleted);
+  }
+
+  const handleOpenCustomerForm = () => {
+    setOpenCustomerForm(true);
+  }
+
+  const handleCloseCustomerForm = () => {
+    setOpenCustomerForm(false);
   }
 
   const loaderProps = {
@@ -73,11 +82,10 @@ function App() {
       <div className="min-h-screen bg-gray-100 text-gray-dark">
         <main className="sm:px-6 lg:px-8 pt-4">
           <div className="mt-4">
-            <Table columns={columns} data={data} showCustomerModal={showCustomerModal} />
+            <Table columns={columns} data={data} onDialog={handleOpenCustomerForm} />
           </div>
         </main>
       </div>
-      {/*isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />*/}
       <Loader open={openLoader} />
       <Popover 
         open={openPopover} 
@@ -87,7 +95,13 @@ function App() {
         align='right'
         duration={6000} 
       />
-      {/*<button className='absolute top-48 mx-auto' onClick={handleOpenPopover}>Open popover</button>*/}
+    {/*<div className='bg-gray-100'>
+      <div className='flex justify-center items-center sm:h-screen md:max-w-screen-md md:mx-auto py-4 mx-4'>
+        <CustomerForm open={openCustomerForm} onClose={handleCloseCustomerForm} />
+      </div>
+</div>*/}
+      <CustomerFormDialog open={openCustomerForm} onClose={handleCloseCustomerForm} />
+      {/*<button onClick={handleOpenCustomerForm}>Open Form</button>*/}
     </>
   )
 }

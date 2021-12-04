@@ -30,11 +30,11 @@
 
 @layer components {
   .surface {
-    @apply bg-white p-4 rounded-md shadow;
+    @apply bg-white p-6 rounded-md shadow;
   }
 
   .bg-modal {
-    @apply flex z-10 justify-center items-center fixed top-0 left-0 w-full h-full overflow-auto bg-black bg-opacity-30 px-4;
+    @apply flex z-10 justify-center items-center fixed top-0 left-0 w-full h-full overflow-auto bg-black bg-opacity-30 py-4 px-4;
   }
 
   .input-picknsend {
