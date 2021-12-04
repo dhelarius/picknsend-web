@@ -81,7 +81,7 @@ const Actions = ({ column, row }) => {
     const deleteCustomerByNpsv = () => {
         handleOpenLoader();
         deleteCustomer(npsv, deleteCustomerSuccess);
-        setDeleted(!deleted)
+        setDeleted(!deleted);
     }
 
     useEffect(() => {

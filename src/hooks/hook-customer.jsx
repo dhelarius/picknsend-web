@@ -16,14 +16,14 @@ const useCreateCustomer = (cb) => {
     return { setNewCustomer };
 }
 
-const useCustomers = (deleted) => {
+const useCustomers = (deleted, update) => {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
         customer.getCustomers().then(response => {
             setCustomers(response.data);
         });
-    }, [deleted])
+    }, [deleted, update])
 
     if(!customers) return null;
 

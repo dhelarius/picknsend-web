@@ -10,7 +10,7 @@ import { usePopover } from './hooks/hook-popover';
 
 function App() {
   const [deleted, setDeleted] = useState(false);
-  const [isCustomerModal, setCustomerModal] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [openCustomerForm, setOpenCustomerForm] = useState(false);
   const [openLoader, setOpenLoader] = useState(false);
 
@@ -24,6 +24,10 @@ function App() {
 
   const handleDeleted = (isDeleted) => {
     setDeleted(isDeleted);
+  }
+
+  const handleUpdate = () => {
+    setUpdate(!update);
   }
 
   const handleOpenCustomerForm = () => {
@@ -81,13 +85,14 @@ function App() {
       emailAccessor: "email",
       statusAccessor: "status",
       handleDeleted: handleDeleted,
+      handleUpdate: handleUpdate,
       handleOpenPopover: handleOpenPopoverSuccessDelete,
       loaderProps: loaderProps
     }
   ], 
   [])
 
-  const data = useCustomers(deleted);
+  const data = useCustomers(deleted, update);
 
   return (
     <>
@@ -110,6 +115,7 @@ function App() {
       <CustomerFormDialog 
         open={openCustomerForm} 
         onClose={handleCloseCustomerForm}
+        onUpdate={handleUpdate}
         onLoader={setOpenLoader}
         handleOpenPopover={handleOpenPopoverSuccessCreate}
       />
