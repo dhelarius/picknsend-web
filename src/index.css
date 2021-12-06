@@ -16,15 +16,35 @@
 /* Buttons */
 @layer components {
   .btn {
-    @apply py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md;
+    @apply py-2 px-4 text-gray-600 font-semibold hover:bg-gray-100 rounded-md;
+  }
+
+  .btn-picknsend {
+    @apply bg-picknsend hover:bg-picknsend-dark px-4 py-2 text-white text-sm font-medium shadow rounded-md;
+  }
+
+  .btn-success {
+    @apply bg-success hover:bg-success-dark text-white shadow;
+  }
+
+  .btn-text-success {
+    @apply bg-transparent hover:bg-success-surface text-success shadow-none;
+  }
+
+  .btn-warning {
+    @apply bg-warning hover:bg-warning-dark text-white shadow;
+  }
+
+  .btn-text-warning {
+    @apply bg-transparent hover:bg-warning-surface text-warning shadow-none;
   }
 
   .btn-error {
     @apply bg-error hover:bg-error-dark text-white shadow;
   }
 
-  .btn-picknsend {
-    @apply bg-picknsend hover:bg-picknsend-dark px-4 py-2 text-white text-sm font-medium shadow rounded-md;
+  .btn-text-error {
+    @apply bg-transparent hover:bg-error-surface text-error shadow-none;
   }
 }
 

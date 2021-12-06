@@ -9,6 +9,9 @@ const useCreateCustomer = (cb) => {
             customer.createCustomer(newCustomer).then(response => {
                 console.log(response.data);
                 cb();
+            }).catch(err => {
+                let message = typeof err.response !== undefined ? err.response.data.message : err.message;
+                console.warn('error:', message);
             });
         }
     }, [newCustomer]);

@@ -7,6 +7,7 @@ import { staticData } from './static/staticValues';
 import { useCustomers } from './hooks/hook-customer';
 import Popover from './components/common/Popover/Popover';
 import { usePopover } from './hooks/hook-popover';
+import Dialog, { SeverityDialog } from './components/common/Dialog';
 
 function App() {
   const [deleted, setDeleted] = useState(false);
@@ -123,6 +124,14 @@ function App() {
         onLoader={setOpenLoader}
         handleOpenPopover={handleOpenPopoverSuccessCreate}
       />
+      {/*<Dialog title="Prueba" message="Esta es una prueba de dialog!" />*/}
+      {/*<SeverityDialog 
+        open={true} 
+        onClose={() => console.log('Close dialog!')} 
+        title="Prueba" 
+        message="Esta es una prueba de dialog!" 
+        severity="success" 
+      />*/}
     </>
   )
 }
