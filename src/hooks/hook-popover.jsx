@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const usePopover = (props) => {
     const [openPopover, setOpenPopover] = useState(false);
+    const [msg, setMessage] = useState('');
 
     const handleOpenPopover = () => {
         setOpenPopover(true);
@@ -16,7 +17,7 @@ const usePopover = (props) => {
     const popoverProps = {
         open: openPopover,
         severity,
-        message,
+        message: message ? message : msg,
         align,
         duration
     }
@@ -24,7 +25,8 @@ const usePopover = (props) => {
     return { 
         handleOpenPopover, 
         handleClosePopover,
-        popoverProps
+        popoverProps,
+        setMessage
     }
 }
 

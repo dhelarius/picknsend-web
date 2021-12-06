@@ -1,5 +1,4 @@
 import { XIcon } from "@heroicons/react/solid";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateCustomer } from "../hooks/hook-customer";
 import date from "../utils/date";
@@ -21,7 +20,13 @@ const Field = (props) => {
     );
 }
 
-const CustomerForm = ({ onClose, onLoader, onUpdate, handleOpenPopover }) => {
+const CustomerForm = ({ 
+    onClose, 
+    onLoader, 
+    onUpdate, 
+    handleOpenPopover,
+    handleWarningPopover
+}) => {
     /*const [value, setValue] = useState('');
 
     const { 
@@ -40,6 +45,7 @@ const CustomerForm = ({ onClose, onLoader, onUpdate, handleOpenPopover }) => {
     }*/
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { handleOpenWarningPopover, setMessage } = handleWarningPopover;
 
     const handleSuccess = () => {
         onLoader(false);
@@ -48,7 +54,14 @@ const CustomerForm = ({ onClose, onLoader, onUpdate, handleOpenPopover }) => {
         onUpdate();
     }
 
-    const { setNewCustomer } = useCreateCustomer(handleSuccess);
+    const handleError = (message) => {
+        onLoader(false);
+        onClose();
+        setMessage(message);
+        handleOpenWarningPopover();
+    }
+
+    const { setNewCustomer } = useCreateCustomer(handleSuccess, handleError);
 
     const onSubmit = data => {
         onLoader(true);
@@ -179,12 +192,25 @@ const CustomerForm = ({ onClose, onLoader, onUpdate, handleOpenPopover }) => {
     );
 }
 
-const CustomerFormDialog = ({ open , onClose, onUpdate, onLoader, handleOpenPopover }) => {
+const CustomerFormDialog = ({ 
+    open, 
+    onClose, 
+    onUpdate, 
+    onLoader, 
+    handleOpenPopover,
+    handleWarningPopover
+}) => {
     return (
         <>
             {open && <div className="bg-modal">
                 <div className="sm:max-w-screen-md w-full">
-                    <CustomerForm onClose={onClose} onLoader={onLoader} onUpdate={onUpdate} handleOpenPopover={handleOpenPopover} />
+                    <CustomerForm 
+                        onClose={onClose} 
+                        onLoader={onLoader} 
+                        onUpdate={onUpdate} 
+                        handleOpenPopover={handleOpenPopover}
+                        handleWarningPopover={handleWarningPopover}
+                    />
                 </div>
             </div>}
         </>

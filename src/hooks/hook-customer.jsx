@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import customer from "../service/customer";
 
-const useCreateCustomer = (cb) => {
+const useCreateCustomer = (cbSuccess, cbError) => {
     const [newCustomer, setNewCustomer] = useState(null);
 
     useEffect(() => {
         if (newCustomer) {
             customer.createCustomer(newCustomer).then(response => {
                 console.log(response.data);
-                cb();
+                cbSuccess();
             }).catch(err => {
                 let message = typeof err.response !== undefined ? err.response.data.message : err.message;
                 console.warn('error:', message);
+                cbError(message);
             });
         }
     }, [newCustomer]);

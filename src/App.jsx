@@ -64,6 +64,16 @@ function App() {
     duration: 6000  
   });
 
+  const { 
+    handleOpenPopover: handleOpenWarningPopover, 
+    handleClosePopover: handleCloseWarningPopover,
+    setMessage, 
+    popoverProps: popoverWarningProps } = usePopover({ 
+    severity: 'warning',
+    align: 'right',
+    duration: 8000  
+  });
+
   const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
     { Header: "Nombre", accessor: "name" },
@@ -86,7 +96,6 @@ function App() {
       emailAccessor: "email",
       statusAccessor: "status",
       handleDeleted: handleDeleted,
-      handleUpdate: handleUpdate,
       handleOpenPopover: handleOpenPopoverSuccessDelete,
       loaderProps: loaderProps
     }
@@ -114,6 +123,10 @@ function App() {
         {...popoverSuccessCreateProps}
       />
       <Popover 
+        onClose={handleCloseWarningPopover}
+        {...popoverWarningProps}
+      />
+      <Popover 
         onClose={handleClosePopoverSuccessDelete}
         {...popoverSuccessDeleteProps}
       />
@@ -123,6 +136,7 @@ function App() {
         onUpdate={handleUpdate}
         onLoader={setOpenLoader}
         handleOpenPopover={handleOpenPopoverSuccessCreate}
+        handleWarningPopover={{handleOpenWarningPopover, setMessage}}
       />
       {/*<Dialog title="Prueba" message="Esta es una prueba de dialog!" />*/}
       {/*<SeverityDialog 
