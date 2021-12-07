@@ -16,17 +16,34 @@ const alignment = {
 
 const Popover = ({ open, onClose, severity, align, message, duration }) => {
 
-    const icon = severity === status.success ? <CheckCircleIcon /> : 
-                 severity === status.warning ? <ExclamationIcon /> :
-                 <ExclamationCircleIcon />
+    let icon = null;
+    let background = null;
+    let text = null;
+    let bgClose = null;
 
-    const background = severity === status.success ? 'bg-green-100 text-green-700' : 
-                       severity === status.warning ? 'bg-yellow-100 text-yellow-700' :
-                       'bg-red-100 text-red-700'
+    const { success, warning, error } = status;
 
-    const text = severity === status.success ? 'text-green-700' : 
-                 severity === status.warning ? 'text-yellow-700' :
-                 'text-red-700'
+    switch(severity) {
+        case success:
+            icon = <CheckCircleIcon />;
+            background = 'bg-green-100 text-green-700';
+            text = 'text-green-700';
+            bgClose = 'hover:bg-green-200'
+        break;
+
+        case warning:
+            icon = <ExclamationIcon />;
+            background = 'bg-yellow-100 text-yellow-700';
+            text = 'text-yellow-700';
+            bgClose = 'hover:bg-yellow-200'
+        break;
+
+        case error:
+            icon = <ExclamationCircleIcon />;
+            background = 'bg-red-100 text-red-700';
+            text = 'text-red-700';
+            bgClose = 'hover:bg-red-200'
+    }
 
     const position = align === alignment.left ? 'left-4' :
                      align === alignment.center ? 'center-fixed' :
@@ -44,7 +61,7 @@ const Popover = ({ open, onClose, severity, align, message, duration }) => {
             </div>
             {message}
             {onClose && <div 
-                className="w-5 h-5 p-1 rounded-full hover:bg-green-200"
+                className={`w-5 h-5 p-1 rounded-full ${bgClose}`}
                 onClick={() => { onClose(); }}
             ><XIcon /></div>}
         </div>

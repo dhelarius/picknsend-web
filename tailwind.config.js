@@ -11,9 +11,10 @@ module.exports = {
       colors: {
         transparent: 'transparent',
         picknsend: {
-          light: '#c9eb40',
-          DEFAULT: '#94d500',
-          dark: '	#87c002'
+          surface: '#F7FFE5',
+          light: '#EDFFC2',
+          DEFAULT: '#94D500',
+          dark: '#76A800'
         },
         blue: '#2e7ce0',
         gray: {

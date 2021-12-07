@@ -24,8 +24,7 @@ const CustomerForm = ({
     onClose, 
     onLoader, 
     onUpdate, 
-    handleOpenPopover,
-    handleWarningPopover
+    handlePopover
 }) => {
     /*const [value, setValue] = useState('');
 
@@ -45,20 +44,41 @@ const CustomerForm = ({
     }*/
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { handleOpenWarningPopover, setMessage } = handleWarningPopover;
+    const { 
+        handleOpenPopover, 
+        setMessage,
+        setSeverity,
+        setAlign,
+        setDuration
+    } = handlePopover;
 
     const handleSuccess = () => {
         onLoader(false);
         onClose();
-        handleOpenPopover();
+        handlePopoverSuccess();
         onUpdate();
     }
 
     const handleError = (message) => {
         onLoader(false);
         onClose();
-        setMessage(message);
-        handleOpenWarningPopover();
+        handlePopoverError(message);
+    }
+
+    const handlePopoverSuccess = () => {
+        setMessage('El elemento se ha creado satisfactoriamente!')
+        setSeverity('success');
+        setAlign('right');
+        setDuration(6000);
+        handleOpenPopover();
+    }
+
+    const handlePopoverError = (message) => {
+        setMessage(message)
+        setSeverity('warning');
+        setAlign('right');
+        setDuration(8000);
+        handleOpenPopover();
     }
 
     const { setNewCustomer } = useCreateCustomer(handleSuccess, handleError);
@@ -197,8 +217,7 @@ const CustomerFormDialog = ({
     onClose, 
     onUpdate, 
     onLoader, 
-    handleOpenPopover,
-    handleWarningPopover
+    handlePopover
 }) => {
     return (
         <>
@@ -208,8 +227,7 @@ const CustomerFormDialog = ({
                         onClose={onClose} 
                         onLoader={onLoader} 
                         onUpdate={onUpdate} 
-                        handleOpenPopover={handleOpenPopover}
-                        handleWarningPopover={handleWarningPopover}
+                        handlePopover={handlePopover}
                     />
                 </div>
             </div>}

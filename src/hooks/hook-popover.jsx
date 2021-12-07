@@ -1,32 +1,38 @@
 import { useState } from "react";
 
 const usePopover = (props) => {
-    const [openPopover, setOpenPopover] = useState(false);
-    const [msg, setMessage] = useState('');
+    const [open, setOpen] = useState(false);
+    const [messagePopover, setMessage] = useState('');
+    const [alignPopover, setAlign] = useState('');
+    const [severityPopover, setSeverity] = useState('');
+    const [durationPopover, setDuration] = useState(0);
 
     const handleOpenPopover = () => {
-        setOpenPopover(true);
+        setOpen(true);
     }
 
     const handleClosePopover = () => {
-        setOpenPopover(false);
+        setOpen(false);
     }
 
     const { severity, message, align, duration } = props;
 
     const popoverProps = {
-        open: openPopover,
-        severity,
-        message: message ? message : msg,
-        align,
-        duration
+        open,
+        severity: severity ? severity : severityPopover,
+        message: message ? message : messagePopover,
+        align: align ? align : alignPopover,
+        duration: duration ? duration : durationPopover
     }
 
     return { 
         handleOpenPopover, 
         handleClosePopover,
-        popoverProps,
-        setMessage
+        setMessage,
+        setSeverity,
+        setAlign,
+        setDuration,
+        popoverProps
     }
 }
 

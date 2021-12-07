@@ -60,7 +60,13 @@ const Actions = ({ column, row }) => {
     let customer = row.values;
     const { npsv } = customer;
     const { handleOpenLoader, handleCloseLoader } = column.loaderProps;
-    const handleOpenPopover = column.handleOpenPopover;
+    const {
+        handleOpenPopover,
+        setMessage,
+        setSeverity,
+        setAlign,
+        setDuration
+    } = column.handlePopover;
 
     const [openDialog, setOpenDialog] = useState(false);
     const [deleted, setDeleted] = useState(false);
@@ -76,13 +82,21 @@ const Actions = ({ column, row }) => {
     const deleteCustomerSuccess = () => {
         handleCloseLoader();
         setDeleted(!deleted);
-        handleOpenPopover();
+        handlePopoverSuccessDelete();
         console.log(`${npsv}: has been deleted.`);
     }
 
     const deleteCustomerByNpsv = () => {
         handleOpenLoader();
         deleteCustomer(npsv, deleteCustomerSuccess);
+    }
+
+    const handlePopoverSuccessDelete = () => {
+        setMessage('El elemento ha sido eliminado satisfatoriamente!');
+        setSeverity('success');
+        setAlign('right');
+        setDuration(6000);
+        handleOpenPopover();
     }
 
     useEffect(() => {

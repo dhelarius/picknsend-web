@@ -45,34 +45,22 @@ function App() {
   }
 
   const { 
-    handleOpenPopover: handleOpenPopoverSuccessDelete, 
-    handleClosePopover: handleClosePopoverSuccessDelete, 
-    popoverProps: popoverSuccessDeleteProps } = usePopover({ 
-    severity: 'success',
-    message: 'El elemento ha sido eliminado exitosamente',
-    align: 'right',
-    duration: 6000  
-  });
+    handleOpenPopover, 
+    handleClosePopover,
+    setMessage,
+    setSeverity,
+    setAlign,
+    setDuration, 
+    popoverProps 
+  } = usePopover({});
 
-  const { 
-    handleOpenPopover: handleOpenPopoverSuccessCreate, 
-    handleClosePopover: handleClosePopoverSuccessCreate, 
-    popoverProps: popoverSuccessCreateProps } = usePopover({ 
-    severity: 'success',
-    message: 'El elemento ha sido creado exitosamente',
-    align: 'right',
-    duration: 6000  
-  });
-
-  const { 
-    handleOpenPopover: handleOpenWarningPopover, 
-    handleClosePopover: handleCloseWarningPopover,
-    setMessage, 
-    popoverProps: popoverWarningProps } = usePopover({ 
-    severity: 'warning',
-    align: 'right',
-    duration: 8000  
-  });
+  const handlePopover = {
+    handleOpenPopover,
+    setMessage,
+    setSeverity,
+    setAlign,
+    setDuration
+  }
 
   const columns = React.useMemo(() => [
     { Header: "Npsv", accessor: "npsv" },
@@ -95,8 +83,8 @@ function App() {
       dniAccessor: "dni",
       emailAccessor: "email",
       statusAccessor: "status",
-      handleDeleted: handleDeleted,
-      handleOpenPopover: handleOpenPopoverSuccessDelete,
+      handleDeleted,
+      handlePopover,
       loaderProps: loaderProps
     }
   ], 
@@ -119,24 +107,15 @@ function App() {
       </div>
       <Loader open={openLoader} />
       <Popover 
-        onClose={handleClosePopoverSuccessCreate}
-        {...popoverSuccessCreateProps}
-      />
-      <Popover 
-        onClose={handleCloseWarningPopover}
-        {...popoverWarningProps}
-      />
-      <Popover 
-        onClose={handleClosePopoverSuccessDelete}
-        {...popoverSuccessDeleteProps}
+        onClose={handleClosePopover}
+        {...popoverProps}
       />
       <CustomerFormDialog 
         open={openCustomerForm} 
         onClose={handleCloseCustomerForm}
         onUpdate={handleUpdate}
         onLoader={setOpenLoader}
-        handleOpenPopover={handleOpenPopoverSuccessCreate}
-        handleWarningPopover={{handleOpenWarningPopover, setMessage}}
+        handlePopover={handlePopover}
       />
       {/*<Dialog title="Prueba" message="Esta es una prueba de dialog!" />*/}
       {/*<SeverityDialog 
