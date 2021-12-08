@@ -6,7 +6,7 @@ import { classNames } from "../shared/utils";
 import { Button, PageButton, PicknsendButton } from "./Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
 import CustomerForm, { CustomerFormDialog } from "./CustomerForm";
-import { deleteCustomer } from "../hooks/hook-customer";
+import { deleteCustomer, inactivateCustomer } from "../hooks/hook-customer";
 import DeleteDialog from "./DeleteDialog";
 
 const GlobalFilter = ({
@@ -79,6 +79,12 @@ const Actions = ({ column, row }) => {
         setOpenDialog(false);
     }
 
+    const deleteCustomerByNpsv = () => {
+        handleOpenLoader();
+        //deleteCustomer(npsv, deleteCustomerSuccess);
+        inactivateCustomer(npsv, deleteCustomerSuccess, deleteCustomerError);
+    }
+
     const deleteCustomerSuccess = () => {
         handleCloseLoader();
         setDeleted(!deleted);
@@ -86,9 +92,9 @@ const Actions = ({ column, row }) => {
         console.log(`${npsv}: has been deleted.`);
     }
 
-    const deleteCustomerByNpsv = () => {
-        handleOpenLoader();
-        deleteCustomer(npsv, deleteCustomerSuccess);
+    const deleteCustomerError = () => {
+        handleCloseLoader();
+        handlePopoverErrorDelete();
     }
 
     const handlePopoverSuccessDelete = () => {
@@ -96,6 +102,14 @@ const Actions = ({ column, row }) => {
         setSeverity('success');
         setAlign('right');
         setDuration(6000);
+        handleOpenPopover();
+    }
+
+    const handlePopoverErrorDelete = (message) => {
+        setMessage(message);
+        setSeverity('error');
+        setAlign('right');
+        setDuration(8000);
         handleOpenPopover();
     }
 

@@ -6,11 +6,14 @@ const getCustomers = () => http.get('/customer')
 
 const getCustomer = (npsv) => http.get(`/customer/${npsv}`)
 
+const inactivateCustomer = (npsv) => http.put(`/customer/inactivate/${npsv}`)
+
 const deleteCustomer = (npsv) => http.delete(`/customer/${npsv}`)
 
 export default {
     createCustomer,
     getCustomers,
     getCustomer,
+    inactivateCustomer,
     deleteCustomer
 }

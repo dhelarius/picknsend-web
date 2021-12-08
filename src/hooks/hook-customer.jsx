@@ -48,22 +48,27 @@ const useCustomer = (npsv) => {
     return dataCustomer;
 }
 
-/*const useDeleteCustomer = (npsv) => {
-    const [isDelete, setIsDelete] = useState(false);
-
-    useEffect(() => {
-        customer.deleteCustomer(npsv);
-        setIsDelete(true);
-    }, [])
-
-    return isDelete;
-}*/
-
-const deleteCustomer = (npsv, callback) => customer.deleteCustomer(npsv).then(response => {
+const deleteCustomer = (npsv, cb) => customer.deleteCustomer(npsv).then(response => {
     let deleted = response.data;
     if (deleted) {
-        callback();
+        cb();
     }
-}).catch(err => callback());
+}).catch(err => cb());
 
-export { useCreateCustomer, useCustomers, useCustomer, deleteCustomer }
+const inactivateCustomer = (npsv, cbSuccess, cbError) => customer.inactivateCustomer(npsv).then(response => {
+    let data = response.data;
+    if (data) {
+        cbSuccess();
+    }
+}).catch(err => {
+    console.error('error:', err.message);
+    cbError(err.message);
+});
+
+export { 
+    useCreateCustomer, 
+    useCustomers, 
+    useCustomer, 
+    deleteCustomer,
+    inactivateCustomer
+}
