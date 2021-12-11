@@ -1,8 +1,8 @@
 import { XIcon } from "@heroicons/react/solid";
 import { useForm } from "react-hook-form";
-import { useCreateCustomer } from "../hooks/hook-customer";
-import date from "../utils/date";
-import { PicknsendButton } from "./Button";
+import { useCreateCustomer } from "../../hooks/hook-customer";
+import date from "../../utils/date";
+import { PicknsendButton } from "../Button";
 
 const Field = (props) => {
     const { type, id, label, placeholder, register, error } = props;

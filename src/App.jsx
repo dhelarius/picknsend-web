@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import './App.css'
-import CustomerForm, { CustomerFormDialog } from './components/CustomerForm';
+import CustomerForm, { CustomerFormDialog } from './components/Customers/CustomerForm';
 import Loader from './components/Loader';
-import Table, { Actions, StatusPill } from './components/Table';
+import Table, { Actions, StatusPill } from './components/Customers/Table';
 import { staticData } from './static/staticValues';
 import { useFindAllCustomers} from './hooks/hook-customer';
 import Popover from './components/common/Popover/Popover';
 import { usePopover } from './hooks/hook-popover';
 import Dialog, { SeverityDialog } from './components/common/Dialog';
+import './App.css'
+import Customers from './components/Customers/Customers';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   const [deleted, setDeleted] = useState(false);
@@ -109,22 +111,17 @@ function App() {
       <Popover 
         onClose={handleClosePopover}
         {...popoverProps}
-      />
-      <CustomerFormDialog 
+    />
+    <CustomerFormDialog 
         open={openCustomerForm} 
         onClose={handleCloseCustomerForm}
         onUpdate={handleUpdate}
         onLoader={setOpenLoader}
         handlePopover={handlePopover}
-      />
-      {/*<Dialog title="Prueba" message="Esta es una prueba de dialog!" />*/}
-      {/*<SeverityDialog 
-        open={true} 
-        onClose={() => console.log('Close dialog!')} 
-        title="Prueba" 
-        message="Esta es una prueba de dialog!" 
-        severity="success" 
-      />*/}
+    />
+    {/*<Router>
+      <Customers />
+    </Router>*/}
     </>
   )
 }

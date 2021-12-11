@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import "regenerator-runtime";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusSmIcon, TrashIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination } from "react-table";
-import { classNames } from "../shared/utils";
-import { Button, PageButton, PicknsendButton } from "./Button";
-import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
+import { classNames } from "../../shared/utils";
+import { Button, PageButton, PicknsendButton } from "../Button";
+import { SortDownIcon, SortIcon, SortUpIcon } from "../Icons";
 import CustomerForm, { CustomerFormDialog } from "./CustomerForm";
-import { deleteCustomer, inactivateCustomer } from "../hooks/hook-customer";
-import DeleteDialog from "./DeleteDialog";
+import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "../../hooks/hook-customer";
+import DeleteDialog from "../DeleteDialog";
+import { Link, BrowserRouter as Router } from "react-router-dom";
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -120,12 +121,15 @@ const Actions = ({ column, row }) => {
     return (
         <>
             <div className="flex gap-x-4">
-                <div 
-                    className="text-blue hover:bg-gray-100 p-1 rounded-md"
-                    onClick={() => console.log('Mostrar ventana de edición de cliente')}
-                >
-                    <PencilIcon className="h-5 w-5" />
-                </div>
+                <Router>
+                    <Link to={`/customers/edit/${npsv}`}>
+                        <div 
+                            className="text-blue hover:bg-gray-100 p-1 rounded-md"
+                        >
+                            <PencilIcon className="h-5 w-5" />
+                        </div>
+                    </Link>
+                </Router>
                 <div 
                     className="text-error hover:bg-gray-100 p-1 rounded-md"
                     onClick={handleOpenDialog}
@@ -318,6 +322,46 @@ const Table = ({ columns, data, onDialog }) => {
     );
 }
 
-export { StatusPill, Actions }
+const CustomerTable = () => {
+
+    const columns = React.useMemo(() => [
+        { Header: "Npsv", accessor: "npsv" },
+        { Header: "Nombre", accessor: "name" },
+        { Header: "Apellido", accessor: "lastName" },
+        { Header: "Dirección", accessor: "address" },
+        { Header: "Teléfono", accessor: "phone" },
+        { Header: "Cédula", accessor: "dni" },
+        { Header: "Email", accessor: "email" },
+        { Header: "Fecha", accessor: "creationDate" },
+        { Header: "Estado", accessor: "status", Cell: StatusPill },
+        { 
+          Header: "Acciones", 
+          Cell: Actions,
+          npsvAccessor: "npsv",
+          nameAccessor: "name",
+          lastnameAccessor: "lastName",
+          addressAccesor: "address",
+          phoneAccessor: "phone",
+          dniAccessor: "dni",
+          emailAccessor: "email",
+          statusAccessor: "status"
+        }
+      ], 
+    [])
+    
+    const data = useFindAllCustomers(false, false);
+
+    return (
+        <div className="min-h-screen bg-gray-100 text-gray-dark">
+            <div className="sm:px-6 lg:px-8 pt-4">
+                <div className="mt-4">
+                    <Table columns={columns} data={data} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export { CustomerTable, StatusPill, Actions }
 
 export default Table
