@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import customer from "../service/customer";
+import customerService from "../service/customerService";
 
 const useCreateCustomer = (cbSuccess, cbError) => {
     const [newCustomer, setNewCustomer] = useState(null);
 
     useEffect(() => {
         if (newCustomer) {
-            customer.createCustomer(newCustomer).then(response => {
+            customerService.create(newCustomer).then(response => {
                 console.log(response.data);
                 cbSuccess();
             }).catch(err => {
@@ -20,11 +20,11 @@ const useCreateCustomer = (cbSuccess, cbError) => {
     return { setNewCustomer };
 }
 
-const useCustomers = (deleted, update) => {
+const useFindAllCustomers = (deleted, update) => {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
-        customer.getCustomers().then(response => {
+        customerService.findAll().then(response => {
             setCustomers(response.data);
         });
     }, [deleted, update])
@@ -34,11 +34,11 @@ const useCustomers = (deleted, update) => {
     return customers;
 }
 
-const useCustomer = (npsv) => {
+const useFindCustomer = (npsv) => {
     const [dataCustomer, setCustomer] = useState({});
 
     useEffect(() => {
-        customer.getCustomer(npsv).then(response => {
+        customerService.find(npsv).then(response => {
             setCustomer(response.data);
         });
     }, [])
@@ -48,14 +48,14 @@ const useCustomer = (npsv) => {
     return dataCustomer;
 }
 
-const deleteCustomer = (npsv, cb) => customer.deleteCustomer(npsv).then(response => {
+const deleteCustomer = (npsv, cb) => customerService.deleteCustomer(npsv).then(response => {
     let deleted = response.data;
     if (deleted) {
         cb();
     }
 }).catch(err => cb());
 
-const inactivateCustomer = (npsv, cbSuccess, cbError) => customer.inactivateCustomer(npsv).then(response => {
+const inactivateCustomer = (npsv, cbSuccess, cbError) => customerService.inactivate(npsv).then(response => {
     let data = response.data;
     if (data) {
         cbSuccess();
@@ -67,8 +67,8 @@ const inactivateCustomer = (npsv, cbSuccess, cbError) => customer.inactivateCust
 
 export { 
     useCreateCustomer, 
-    useCustomers, 
-    useCustomer, 
+    useFindAllCustomers, 
+    useFindCustomer, 
     deleteCustomer,
     inactivateCustomer
 }

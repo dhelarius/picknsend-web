@@ -4,7 +4,7 @@ import CustomerForm, { CustomerFormDialog } from './components/CustomerForm';
 import Loader from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Table';
 import { staticData } from './static/staticValues';
-import { useCustomers } from './hooks/hook-customer';
+import { useFindAllCustomers} from './hooks/hook-customer';
 import Popover from './components/common/Popover/Popover';
 import { usePopover } from './hooks/hook-popover';
 import Dialog, { SeverityDialog } from './components/common/Dialog';
@@ -90,7 +90,7 @@ function App() {
   ], 
   [])
 
-  const data = useCustomers(deleted, update);
+  const data = useFindAllCustomers(deleted, update);
 
   useEffect(() => {
     console.log(`deleted: ${deleted}`);
