@@ -5,7 +5,7 @@ const http = {
 
     post: (url, body) => axios.post(url, body),
 
-    put: (url) => axios.put(url),
+    put: (url, data) => axios.put(url, data),
     
     delete: (url) => axios.delete(url)
 }

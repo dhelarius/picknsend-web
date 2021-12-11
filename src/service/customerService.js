@@ -6,7 +6,9 @@ const findAll = () => http.get('/customer')
 
 const find = (npsv) => http.get(`/customer/${npsv}`)
 
-const inactivate = (npsv) => http.put(`/customer/inactivate/${npsv}`)
+const update = (data) => http.put(`/customer`, data)
+
+const inactivate = (npsv) => http.put(`/customer/inactivate/${npsv}`, null)
 
 const deleteCustomer = (npsv) => http.delete(`/customer/${npsv}`)
 
