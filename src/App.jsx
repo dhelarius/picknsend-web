@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import CustomerForm, { CustomerFormDialog } from './components/Customers/CustomerForm';
 import Loader from './components/Loader';
 import Table, { Actions, StatusPill } from './components/Customers/Table';
 import { staticData } from './static/staticValues';
-import { useFindAllCustomers} from './hooks/hook-customer';
+import { useFindAllCustomers} from './components/Customers/hooks/customer-hook';
 import Popover from './components/common/Popover/Popover';
-import { usePopover } from './hooks/hook-popover';
-import Dialog, { SeverityDialog } from './components/common/Dialog';
+import { usePopover } from './components/common/Popover/hooks/popover-hook';
 import './App.css'
-import Customers from './components/Customers/Customers';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { CustomerForm } from './screens/Customers/Form';
 
 function App() {
   const [deleted, setDeleted] = useState(false);
@@ -111,17 +108,14 @@ function App() {
       <Popover 
         onClose={handleClosePopover}
         {...popoverProps}
-    />
-    <CustomerFormDialog 
-        open={openCustomerForm} 
-        onClose={handleCloseCustomerForm}
-        onUpdate={handleUpdate}
-        onLoader={setOpenLoader}
-        handlePopover={handlePopover}
-    />
-    {/*<Router>
-      <Customers />
-    </Router>*/}
+      />
+      <CustomerForm
+          open={openCustomerForm} 
+          onClose={handleCloseCustomerForm}
+          onUpdate={handleUpdate}
+          onLoader={setOpenLoader}
+          handlePopover={handlePopover}
+      />
     </>
   )
 }

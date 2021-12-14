@@ -5,8 +5,7 @@ import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination }
 import { classNames } from "../../shared/utils";
 import { Button, PageButton, PicknsendButton } from "../Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "../Icons";
-import CustomerForm, { CustomerFormDialog } from "./CustomerForm";
-import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "../../hooks/hook-customer";
+import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "./hooks/customer-hook";
 import DeleteDialog from "../DeleteDialog";
 import { Link, BrowserRouter as Router } from "react-router-dom";
 
@@ -121,15 +120,12 @@ const Actions = ({ column, row }) => {
     return (
         <>
             <div className="flex gap-x-4">
-                <Router>
-                    <Link to={`/customers/edit/${npsv}`}>
-                        <div 
-                            className="text-blue hover:bg-gray-100 p-1 rounded-md"
-                        >
-                            <PencilIcon className="h-5 w-5" />
-                        </div>
-                    </Link>
-                </Router>
+                    <div 
+                        className="text-blue hover:bg-gray-100 p-1 rounded-md"
+                        onClick={() => console.log(`Editar al cliente: ${npsv}`)}
+                    >
+                        <PencilIcon className="h-5 w-5" />
+                    </div>
                 <div 
                     className="text-error hover:bg-gray-100 p-1 rounded-md"
                     onClick={handleOpenDialog}

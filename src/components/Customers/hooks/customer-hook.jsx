@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import customerService from "../service/customerService";
+import customerService from "../../../service/customerService";
 
 const useCreateCustomer = (cbSuccess, cbError) => {
     const [newCustomer, setNewCustomer] = useState(null);

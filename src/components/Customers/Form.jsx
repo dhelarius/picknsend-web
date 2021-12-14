@@ -1,6 +1,6 @@
 import { XIcon } from "@heroicons/react/solid";
 import { useForm } from "react-hook-form";
-import { useCreateCustomer } from "../../hooks/hook-customer";
+import { useCreateCustomer } from "./hooks/customer-hook";
 import date from "../../utils/date";
 import { PicknsendButton } from "../Button";
 
@@ -20,7 +20,7 @@ const Field = (props) => {
     );
 }
 
-const CustomerForm = ({ 
+const Form = ({ 
     onClose, 
     onLoader, 
     onUpdate, 
@@ -91,70 +91,6 @@ const CustomerForm = ({
 
     return (
         <>
-            {/*<form className="flex flex-col max-w-screen-sm mx-auto surface" onSubmit={handleSubmit(onSubmit)}>
-                <div 
-                    className="flex justify-center items-center self-end h-8 w-8 hover:bg-gray-100 text-gray-700 m-2 mb-4 rounded-md"
-                    onClick={onClose}
-                >
-                    <XIcon className="h-5 w-5" />
-                </div>
-                <div className="flex flex-col sm:flex-row sm:gap-x-4 mb-1">
-                    <div className="flex flex-col flex-grow sm:w-16">
-                        <input className="input-picknsend h-10 bg-gray-100" type="text" {...register("npsv", { required: true })} placeholder="npsv" />
-                        <div className="h-6">
-                            {errors.npsv && <span className="text-error text-xs">* requerido</span>}
-                        </div>
-                    </div>
-                    <div className="flex flex-col flex-grow">
-                        <input className="input-picknsend h-10 bg-gray-100" type="text" {...register("name", { required: true })} placeholder="Nombre" />
-                        <div className="h-6">
-                            {errors.name && <span className="text-error text-xs">* requerido</span>}
-                        </div>
-                    </div>
-                    <div className="flex flex-col flex-grow">
-                        <input className="input-picknsend h-10 bg-gray-100" type="text" {...register("lastname", { required: true })} placeholder="Apellido" />
-                        <div className="h-6">
-                            {errors.lastname && <span className="text-error text-xs">* requerido</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col h-16 mb-1">
-                    <input className="input-picknsend bg-gray-100" type="text" {...register("address", { required: true })} placeholder="Dirección" />
-                    {errors.address && <span className="text-error text-xs">* requerido</span>}
-                </div>
-                <div className="flex flex-col sm:flex-row sm:gap-x-4">
-                    <div className="flex flex-col flex-grow">
-                        <input className="input-picknsend h-10 bg-gray-100" type="tel" {...register("phone", { required: true })} placeholder="Teléfono" />
-                        <div className="h-6">
-                            {errors.phone && <span className="text-error text-xs">* requerido</span>}
-                        </div>
-                    </div>
-                    <div className="flex flex-col flex-grow mb-1">
-                        <input className="input-picknsend h-10 bg-gray-100" type="text" {...register("dni", { required: true })} placeholder="Cédula" />
-                        <div className="h-6">
-                            {errors.dni && <span className="text-error text-xs">* requerido</span>}
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:gap-x-4">
-                    <input className="flex-grow input-picknsend mb-7 sm:mb-0 bg-gray-100" type="email" {...register("email")} placeholder="email@ejemplo.com" />
-                    <select className=" bg-gray-100 input-picknsend text-gray-500" {...register("status")}>
-                        {["Activo", "Inactivo"].map(status => (
-                            <option key={status} value={status}>
-                                {status}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="text-center uppercase mt-6">
-                    <PicknsendButton
-                    onClick={handleSubmit(onSubmit)}
-                    >
-                        GUARDAR
-                    </PicknsendButton>
-                </div>
-            </form>*/}
-            {/*<input className="btn-picknsend h-10 mt-6 uppercase text-sm font-medium" type="submit" defaultValue="guardar" />*/}
             <form className="flex flex-col surface max-w-full w-full" onSubmit={handleSubmit(onSubmit)}>
                 <div 
                     className="flex justify-center items-center self-end h-8 w-8 hover:bg-gray-100 text-gray-700 m-2 mb-4 rounded-md"
@@ -212,29 +148,4 @@ const CustomerForm = ({
     );
 }
 
-const CustomerFormDialog = ({ 
-    open, 
-    onClose, 
-    onUpdate, 
-    onLoader, 
-    handlePopover
-}) => {
-    return (
-        <>
-            {open && <div className="bg-modal">
-                <div className="sm:max-w-screen-md w-full">
-                    <CustomerForm 
-                        onClose={onClose} 
-                        onLoader={onLoader} 
-                        onUpdate={onUpdate} 
-                        handlePopover={handlePopover}
-                    />
-                </div>
-            </div>}
-        </>
-    );
-}
-
-export { CustomerFormDialog }
-
-export default CustomerForm
+export default Form
