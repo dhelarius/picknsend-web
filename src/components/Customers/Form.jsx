@@ -1,17 +1,25 @@
 import { XIcon } from "@heroicons/react/solid";
 import { useForm } from "react-hook-form";
-import { useCreateCustomer } from "./hooks/customer-hook";
+import { useCreateCustomer, useUpdateCustomer } from "./hooks/customer-hook";
 import date from "../../utils/date";
 import { PicknsendButton } from "../Button";
+import { useEffect } from "react/cjs/react.development";
 
 const Field = (props) => {
-    const { type, id, label, placeholder, register, error } = props;
+    const { type, id, label, placeholder, register, error, readOnly } = props;
 
     return (
         <>
             <div className="flex flex-col mt-1">
                 <label className="mb-1 text-md font-medium text-gray-700" htmlFor={id}>{label}</label>
-                <input className="input-picknsend bg-gray-100" type={type} id={id} {...register} placeholder={placeholder} />
+                <input 
+                    className="input-picknsend bg-gray-100" 
+                    type={type} 
+                    id={id} 
+                    {...register} 
+                    placeholder={placeholder}
+                    readOnly={readOnly}
+                />
             </div>
             {<div className="h-6">
                 {error && <span className="text-error text-xs">* requerido</span>}
@@ -24,26 +32,24 @@ const Form = ({
     onClose, 
     onLoader, 
     onUpdate, 
-    handlePopover
+    handlePopover,
+    customer,
+    setCustomer
 }) => {
-    /*const [value, setValue] = useState('');
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
-    const { 
-        npsv,
-        name,
-        lastName,
-        address,
-        phone,
-        dni,
-        email,
-        status
-    } = customer;
+    const isAddMode = !customer;
 
-    const inputChangeHandler = (e) => {
-        setValue(e.target.value);
-    }*/
+    const add = (data) => {
+        data.creationDate = date.now();
+        setNewCustomer(data);
+    }
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        onLoader(true);
+        isAddMode ? add(data) : setUpdatedData(data);
+    }
+
     const { 
         handleOpenPopover, 
         setMessage,
@@ -52,10 +58,10 @@ const Form = ({
         setDuration
     } = handlePopover;
 
-    const handleSuccess = () => {
+    const handleSuccess = (message) => {
         onLoader(false);
         onClose();
-        handlePopoverSuccess();
+        handlePopoverSuccess(message);
         onUpdate();
     }
 
@@ -65,8 +71,8 @@ const Form = ({
         handlePopoverError(message);
     }
 
-    const handlePopoverSuccess = () => {
-        setMessage('El elemento se ha creado satisfactoriamente!')
+    const handlePopoverSuccess = (message) => {
+        setMessage(message)
         setSeverity('success');
         setAlign('right');
         setDuration(6000);
@@ -82,12 +88,15 @@ const Form = ({
     }
 
     const { setNewCustomer } = useCreateCustomer(handleSuccess, handleError);
+    const { setUpdatedData } = useUpdateCustomer(handleSuccess, handleError);
 
-    const onSubmit = data => {
-        onLoader(true);
-        data.creationDate = date.now();
-        setNewCustomer(data);
-    }
+    useEffect(() => {
+        if (!isAddMode) {
+            const fields = ['npsv', 'name', 'lastName', 'address', 'phone', 'dni', 'email', 'creationDate', 'status'];
+            fields.forEach(field => setValue(field, customer[field]));
+        }
+        return () => setCustomer(null);
+    }, []);
 
     return (
         <>
@@ -100,7 +109,7 @@ const Form = ({
                 </div>
                 <div className="sm:flex sm:gap-x-4">
                     <div className="flex-grow sm:w-24">
-                        <Field type="text" id="fnpsv" label="Npsv"register={{...register("npsv", { required: true })}} error={errors.npsv} placeholder="e.g 1001" />
+                        <Field type="text" id="fnpsv" label="Npsv"register={{...register("npsv", { required: true })}} error={errors.npsv} placeholder="e.g 1001" readOnly={isAddMode ? false : true} />
                     </div>
                     <div className="sm:flex-grow">
                         <Field type="text" id="fname" label="Nombre" register={{...register("name", { required: true })}} error={errors.name} placeholder="e.g José" />
@@ -140,7 +149,7 @@ const Form = ({
                     <PicknsendButton
                     onClick={handleSubmit(onSubmit)}
                     >
-                        GUARDAR
+                        {isAddMode ? 'GUARDAR' : 'EDITAR'}
                     </PicknsendButton>
                 </div>
             </form>

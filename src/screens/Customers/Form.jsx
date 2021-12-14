@@ -5,7 +5,8 @@ const CustomerForm = ({
     onClose, 
     onUpdate, 
     onLoader, 
-    handlePopover
+    handlePopover,
+    getCustomerProps
 }) => {
     return (
         <>
@@ -16,6 +17,7 @@ const CustomerForm = ({
                         onLoader={onLoader} 
                         onUpdate={onUpdate} 
                         handlePopover={handlePopover}
+                        {...getCustomerProps}
                     />
                 </div>
             </div>}

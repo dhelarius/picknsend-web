@@ -7,7 +7,6 @@ import { Button, PageButton, PicknsendButton } from "../Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "../Icons";
 import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "./hooks/customer-hook";
 import DeleteDialog from "../DeleteDialog";
-import { Link, BrowserRouter as Router } from "react-router-dom";
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -122,7 +121,7 @@ const Actions = ({ column, row }) => {
             <div className="flex gap-x-4">
                     <div 
                         className="text-blue hover:bg-gray-100 p-1 rounded-md"
-                        onClick={() => console.log(`Editar al cliente: ${npsv}`)}
+                        onClick={() => { column.setCustomer(customer); column.handleOpenCustomerForm() }}
                     >
                         <PencilIcon className="h-5 w-5" />
                     </div>

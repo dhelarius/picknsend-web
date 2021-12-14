@@ -13,6 +13,7 @@ function App() {
   const [update, setUpdate] = useState(false);
   const [openCustomerForm, setOpenCustomerForm] = useState(false);
   const [openLoader, setOpenLoader] = useState(false);
+  const [customer, setCustomer] = useState(null);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -82,9 +83,11 @@ function App() {
       dniAccessor: "dni",
       emailAccessor: "email",
       statusAccessor: "status",
+      setCustomer,
+      handleOpenCustomerForm,
       handleDeleted,
       handlePopover,
-      loaderProps: loaderProps
+      loaderProps
     }
   ], 
   [])
@@ -94,6 +97,11 @@ function App() {
   useEffect(() => {
     console.log(`deleted: ${deleted}`);
   }, [deleted]);
+
+  const getCustomerProps = {
+    customer, 
+    setCustomer
+  }
 
   return (
     <>
@@ -110,11 +118,12 @@ function App() {
         {...popoverProps}
       />
       <CustomerForm
-          open={openCustomerForm} 
-          onClose={handleCloseCustomerForm}
-          onUpdate={handleUpdate}
-          onLoader={setOpenLoader}
-          handlePopover={handlePopover}
+        open={openCustomerForm} 
+        onClose={handleCloseCustomerForm}
+        onUpdate={handleUpdate}
+        onLoader={setOpenLoader}
+        handlePopover={handlePopover}
+        getCustomerProps={getCustomerProps}
       />
     </>
   )

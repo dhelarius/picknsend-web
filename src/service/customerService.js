@@ -13,9 +13,10 @@ const inactivate = (npsv) => http.put(`/customer/inactivate/${npsv}`, null)
 const deleteCustomer = (npsv) => http.delete(`/customer/${npsv}`)
 
 export default {
-    create,
     findAll,
     find,
+    create,
+    update,
     inactivate,
     deleteCustomer
 }
