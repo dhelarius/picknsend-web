@@ -1,8 +1,11 @@
 import axios from "axios"
+import { vite } from "./env";
+
+const { apiUrl, timeout } = vite;
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/api/v1/',
-    timeout: 15000,
+    baseURL: apiUrl,
+    timeout: timeout,
     headers: {'content-type': 'application/json'}
 });
 

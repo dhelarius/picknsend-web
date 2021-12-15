@@ -1,6 +1,6 @@
 {
   "name": "react-vite-template",
-  "version": "2.0.0-prealfa",
+  "version": "2.1.0-prealfa",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
