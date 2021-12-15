@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "regenerator-runtime";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, PencilIcon, PlusSmIcon, TrashIcon } from "@heroicons/react/solid";
 import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination } from "react-table";
-import { classNames } from "../shared/utils";
-import { Button, PageButton, PicknsendButton } from "./Button";
-import { SortDownIcon, SortIcon, SortUpIcon } from "./Icons";
-import { CustomerFormModal } from "./CustomerForm";
+import { classNames } from "../../shared/utils";
+import { Button, PageButton, PicknsendButton } from "../Button";
+import { SortDownIcon, SortIcon, SortUpIcon } from "../Icons";
+import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "./hooks/customer-hook";
+import DeleteDialog from "../DeleteDialog";
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -55,40 +56,92 @@ const StatusPill = ({ value }) => {
 }
 
 const Actions = ({ column, row }) => {
-    const [isCustomerModal, setCustomerModal] = useState(false);
-
-    const showCustomerModal = () => {
-        setCustomerModal(true);
-    }
-    
-    const hideCustomerModal = () => {
-        setCustomerModal(false)
-    }
-
     let customer = row.values;
+    const { npsv } = customer;
+    const { handleOpenLoader, handleCloseLoader } = column.loaderProps;
+    const {
+        handleOpenPopover,
+        setMessage,
+        setSeverity,
+        setAlign,
+        setDuration
+    } = column.handlePopover;
+
+    const [openDialog, setOpenDialog] = useState(false);
+    const [deleted, setDeleted] = useState(false);
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    }
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    }
+
+    const deleteCustomerByNpsv = () => {
+        handleOpenLoader();
+        //deleteCustomer(npsv, deleteCustomerSuccess);
+        inactivateCustomer(npsv, deleteCustomerSuccess, deleteCustomerError);
+    }
+
+    const deleteCustomerSuccess = () => {
+        handleCloseLoader();
+        setDeleted(!deleted);
+        handlePopoverSuccessDelete();
+        console.log(`${npsv}: has been deleted.`);
+    }
+
+    const deleteCustomerError = () => {
+        handleCloseLoader();
+        handlePopoverErrorDelete();
+    }
+
+    const handlePopoverSuccessDelete = () => {
+        setMessage('El elemento ha sido eliminado satisfatoriamente!');
+        setSeverity('success');
+        setAlign('right');
+        setDuration(6000);
+        handleOpenPopover();
+    }
+
+    const handlePopoverErrorDelete = (message) => {
+        setMessage(message);
+        setSeverity('error');
+        setAlign('right');
+        setDuration(8000);
+        handleOpenPopover();
+    }
+
+    useEffect(() => {
+        column.handleDeleted(deleted);
+    }, [deleted]);
 
     return (
         <>
             <div className="flex gap-x-4">
-                <div 
-                    className="text-blue hover:bg-gray-100 p-1 rounded-md"
-                    onClick={() => showCustomerModal()}
-                >
-                    <PencilIcon className="h-5 w-5" />
-                </div>
+                    <div 
+                        className="text-blue hover:bg-gray-100 p-1 rounded-md"
+                        onClick={() => { column.setCustomer(customer); column.handleOpenCustomerForm() }}
+                    >
+                        <PencilIcon className="h-5 w-5" />
+                    </div>
                 <div 
                     className="text-error hover:bg-gray-100 p-1 rounded-md"
-                    onClick={() => console.log(`Eliminar ${customer.npsv}`)}
+                    onClick={handleOpenDialog}
                 >
                     <TrashIcon className="h-5 w-5" />
                 </div>
             </div>
-            {isCustomerModal && <CustomerFormModal customer={customer} hideCustomerModal={hideCustomerModal} />}
+            <DeleteDialog 
+                open={openDialog} 
+                onClose={handleCloseDialog} 
+                action={deleteCustomerByNpsv}
+            />
         </>
     );
 }
 
-const Table = ({ columns, data, showCustomerModal }) => {
+const Table = ({ columns, data, onDialog }) => {
     const instance = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
 
     const {
@@ -123,7 +176,7 @@ const Table = ({ columns, data, showCustomerModal }) => {
                     setGlobalFilter={setGlobalFilter}
                 />
                 <PicknsendButton
-                    onClick={() => showCustomerModal()}
+                    onClick={onDialog}
                 >
                     <div className="flex items-center">
                         <PlusSmIcon className="h-6 w-6" />
@@ -264,6 +317,46 @@ const Table = ({ columns, data, showCustomerModal }) => {
     );
 }
 
-export { StatusPill, Actions }
+const CustomerTable = () => {
+
+    const columns = React.useMemo(() => [
+        { Header: "Npsv", accessor: "npsv" },
+        { Header: "Nombre", accessor: "name" },
+        { Header: "Apellido", accessor: "lastName" },
+        { Header: "Dirección", accessor: "address" },
+        { Header: "Teléfono", accessor: "phone" },
+        { Header: "Cédula", accessor: "dni" },
+        { Header: "Email", accessor: "email" },
+        { Header: "Fecha", accessor: "creationDate" },
+        { Header: "Estado", accessor: "status", Cell: StatusPill },
+        { 
+          Header: "Acciones", 
+          Cell: Actions,
+          npsvAccessor: "npsv",
+          nameAccessor: "name",
+          lastnameAccessor: "lastName",
+          addressAccesor: "address",
+          phoneAccessor: "phone",
+          dniAccessor: "dni",
+          emailAccessor: "email",
+          statusAccessor: "status"
+        }
+      ], 
+    [])
+    
+    const data = useFindAllCustomers(false, false);
+
+    return (
+        <div className="min-h-screen bg-gray-100 text-gray-dark">
+            <div className="sm:px-6 lg:px-8 pt-4">
+                <div className="mt-4">
+                    <Table columns={columns} data={data} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export { CustomerTable, StatusPill, Actions }
 
 export default Table

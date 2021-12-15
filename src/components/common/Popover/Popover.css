@@ -1,0 +1,27 @@
+@layer utilities {
+  .animate-translate {
+    animation: translate;
+  }
+}
+
+@keyframes translate {
+  0% {
+    top: -48px;
+    opacity: 0;
+  }
+
+  8% {
+    top: 16px;
+    opacity: 1;
+  }
+
+  92% {
+    top: 16px;
+    opacity: 1;
+  }
+
+  100% {
+    top: -48px;
+    opacity: 0;
+  }
+}

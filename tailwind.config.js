@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
@@ -9,9 +11,10 @@ module.exports = {
       colors: {
         transparent: 'transparent',
         picknsend: {
-          light: '#c9eb40',
-          DEFAULT: '#94d500',
-          dark: '	#87c002'
+          surface: '#F7FFE5',
+          light: '#EDFFC2',
+          DEFAULT: '#94D500',
+          dark: '#76A800'
         },
         blue: '#2e7ce0',
         gray: {
@@ -21,9 +24,24 @@ module.exports = {
         },
         white: '#ffffff',
         cream: '#e1d0a5',
-        error: '#c13832',
-        warning: '#ffe614',
-        success: '#03af43'
+        success: {
+          surface: '#ECFDF5',
+          light: '#D1FAE5',
+          DEFAULT: '#34D399',
+          dark: '#059669'
+        },
+        warning: {
+          surface: '#FFFBEB',
+          light: '#FEF3C7',
+          DEFAULT: '#FBBF24',
+          dark: '#D97706'
+        },
+        error: {
+          surface: '#FEF2F2',
+          light: '#FEE2E2',
+          DEFAULT: '#EF4444',
+          dark: '#B91C1C'
+        }
       }
     }
     },

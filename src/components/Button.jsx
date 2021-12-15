@@ -1,17 +1,4 @@
-import React from "react";
 import { classNames } from "../shared/utils";
-
-const PicknsendButton = ({ children, className, ...rest }) => {
-    return (
-        <button
-            type="button"
-            className="btn-picknsend"
-            {...rest}
-        >
-            {children}
-        </button>
-    );
-}
 
 const Button = ({ children, className, ...rest }) => {
     return (
@@ -43,4 +30,20 @@ const PageButton = ({ children, className, ...rest }) => {
     );
 }
 
-export { PicknsendButton, Button, PageButton }
+const PicknsendButton = ({ children, className, ...rest }) => {
+    return (
+        <button
+            type="button"
+            className="btn-picknsend"
+            {...rest}
+        >
+            {children}
+        </button>
+    );
+}
+
+export { 
+    PicknsendButton, 
+    Button,
+    PageButton
+}

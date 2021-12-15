@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
-import './App.css'
-import CustomerForm, { CustomerFormModal } from './components/CustomerForm';
-import Loader, { LoaderModal } from './components/Loader';
-import ReactHookForm, { SampleForm } from './components/ReactHookForm';
-import Table, { Actions, StatusPill } from './components/Table';
+import React, { useEffect, useState } from 'react'
+import Loader from './components/Loader';
+import Table, { Actions, StatusPill } from './components/Customers/Table';
 import { staticData } from './static/staticValues';
+import { useFindAllCustomers} from './components/Customers/hooks/customer-hook';
+import Popover from './components/common/Popover/Popover';
+import { usePopover } from './components/common/Popover/hooks/popover-hook';
+import './App.css'
+import { CustomerForm } from './screens/Customers/Form';
 
 function App() {
-  const [isCustomerModal, setCustomerModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [openCustomerForm, setOpenCustomerForm] = useState(false);
+  const [openLoader, setOpenLoader] = useState(false);
+  const [customer, setCustomer] = useState(null);
 
   const showCustomerModal = () => {
     setCustomerModal(true);
@@ -18,12 +23,43 @@ function App() {
     setCustomerModal(false)
   }
 
-  const showLoader = () => {
-    setIsLoading(true);
-  } 
+  const handleDeleted = (deleted) => {
+    setDeleted(deleted);
+  }
 
-  const hideLoader = () => {
-    setIsLoading(false)
+  const handleUpdate = () => {
+    setUpdate(!update);
+  }
+
+  const handleOpenCustomerForm = () => {
+    setOpenCustomerForm(true);
+  }
+
+  const handleCloseCustomerForm = () => {
+    setOpenCustomerForm(false);
+  }
+
+  const loaderProps = {
+    handleOpenLoader: () => setOpenLoader(true),
+    handleCloseLoader: () => setOpenLoader(false)
+  }
+
+  const { 
+    handleOpenPopover, 
+    handleClosePopover,
+    setMessage,
+    setSeverity,
+    setAlign,
+    setDuration, 
+    popoverProps 
+  } = usePopover({});
+
+  const handlePopover = {
+    handleOpenPopover,
+    setMessage,
+    setSeverity,
+    setAlign,
+    setDuration
   }
 
   const columns = React.useMemo(() => [
@@ -38,7 +74,7 @@ function App() {
     { Header: "Estado", accessor: "status", Cell: StatusPill },
     { 
       Header: "Acciones", 
-      Cell: Actions, 
+      Cell: Actions,
       npsvAccessor: "npsv",
       nameAccessor: "name",
       lastnameAccessor: "lastName",
@@ -46,28 +82,49 @@ function App() {
       phoneAccessor: "phone",
       dniAccessor: "dni",
       emailAccessor: "email",
-      statusAccessor: "status"
+      statusAccessor: "status",
+      setCustomer,
+      handleOpenCustomerForm,
+      handleDeleted,
+      handlePopover,
+      loaderProps
     }
   ], 
   [])
 
-  const data = React.useMemo(() => staticData(), []);
+  const data = useFindAllCustomers(deleted, update);
+
+  useEffect(() => {
+    console.log(`deleted: ${deleted}`);
+  }, [deleted]);
+
+  const getCustomerProps = {
+    customer, 
+    setCustomer
+  }
 
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-dark">
         <main className="sm:px-6 lg:px-8 pt-4">
           <div className="mt-4">
-            <Table columns={columns} data={data} showCustomerModal={showCustomerModal} />
+            <Table columns={columns} data={data} onDialog={handleOpenCustomerForm} />
           </div>
         </main>
       </div>
-      {isCustomerModal && <CustomerFormModal hideCustomerModal={hideCustomerModal} showLoader={showLoader} />}
-      {isLoading && <LoaderModal hideLoader={hideLoader} />}
-      {/*<ReactHookForm />*/}
-      {/*<div className="min-h-screen bg-gray-100 text-gray-dark pt-8">
-        <SampleForm />
-      </div>*/}
+      <Loader open={openLoader} />
+      <Popover 
+        onClose={handleClosePopover}
+        {...popoverProps}
+      />
+      <CustomerForm
+        open={openCustomerForm} 
+        onClose={handleCloseCustomerForm}
+        onUpdate={handleUpdate}
+        onLoader={setOpenLoader}
+        handlePopover={handlePopover}
+        getCustomerProps={getCustomerProps}
+      />
     </>
   )
 }

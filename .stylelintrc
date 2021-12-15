@@ -14,12 +14,13 @@
         }],
         "block-no-empty": true,
         "selector-class-pattern": "[A-Za-z]+",    
-        "unit-allowed-list": ["em", "rem", "s", "vh", "px", "%", "vmin"],
+        "unit-allowed-list": ["em", "rem", "s", "ms", "vh", "px", "%", "vmin"],
         "hue-degree-notation": "number",
         "string-quotes": "single",
         "declaration-block-trailing-semicolon": "always",
         "no-descending-specificity": true,
         "keyframe-declaration-no-important": true,
-        "comment-whitespace-inside": "never"
+        "comment-whitespace-inside": "always",
+        "max-line-length": 160
     }
 }
