@@ -7,7 +7,7 @@ const Home = () => {
             <div className="mb-4">
                 <Logo />
             </div>
-            <p className="text-lg subtitle subtitle-lg">Sistema de gestión</p>
+            <p className="text-lg subtitle subtitle-lg">Sistema de gestión de compras</p>
             <div className="flex gap-5 mt-8">
                 <Link to='/login'>
                     <button className="btn btn-picknsend shadow-none text-xl px-8 h-16">Iniciar sesion</button>
