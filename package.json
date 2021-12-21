@@ -1,6 +1,6 @@
 {
   "name": "picknsend-web",
-  "version": "2.2.0-prealpha",
+  "version": "2.3.0-prealpha",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

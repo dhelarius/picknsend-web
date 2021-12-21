@@ -14,7 +14,7 @@
         }],
         "block-no-empty": true,
         "selector-class-pattern": "[A-Za-z]+",    
-        "unit-allowed-list": ["em", "rem", "s", "ms", "vh", "px", "%", "vmin"],
+        "unit-allowed-list": ["em", "rem", "s", "ms", "vh", "px", "%", "vmin", "deg"],
         "hue-degree-notation": "number",
         "string-quotes": "single",
         "declaration-block-trailing-semicolon": "always",

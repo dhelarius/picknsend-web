@@ -15,6 +15,22 @@
 
 /* Buttons */
 @layer components {
+  .title {
+    @apply text-xl font-bold text-gray-700;
+  }
+
+  .subtitle {
+    @apply text-gray-500;
+  }
+
+  .subtitle-dark {
+    @apply text-gray-700;
+  }
+
+  .label {
+    @apply font-medium text-gray-700;
+  }
+
   .btn {
     @apply py-2 px-4 text-gray-600 font-semibold hover:bg-gray-100 rounded-md;
   }
@@ -58,7 +74,7 @@
   }
 
   .input-picknsend {
-    @apply border-0 rounded-md focus:border-picknsend focus:ring focus:ring-picknsend-light focus:ring-opacity-50;
+    @apply border-0 rounded-md bg-gray-100 focus:border-picknsend focus:ring focus:ring-picknsend-light focus:ring-opacity-50;
   }
 
   .lds-ellipsis {
@@ -86,6 +102,25 @@
   }
 }
 
+/* Text */
+@layer utilities {
+  .text-logo-xl {
+    font-size: 5rem;
+  }
+
+  .text-logo-lg {
+    font-size: 3rem;
+  }
+
+  .text-logo-sm {
+    font-size: 1.3rem;
+  }
+
+  .subtitle-lg {
+    font-size: 1.7rem;
+  }
+}
+
 @layer utilities {
   .center-fixed {
     left: 50%;
@@ -94,6 +129,26 @@
 
   .w-104 {
     width: 480px;
+  }
+
+  .min-h-96 {
+    min-height: 384px;
+  }
+
+  .max-h-98 {
+    max-height: 512px;
+  }
+
+  .rotate-ps-45 {
+    transform: rotate(45deg);
+  }
+
+  .-rotate-ps-45 {
+    transform: rotate(-45deg);
+  }
+
+  .gradient-picknsend {
+    background: linear-gradient(90deg, rgba(148, 213, 0, 100%) 35%, rgba(194, 255, 48, 100%) 100%);
   }
 
   .anim-ellipsis-1 {
