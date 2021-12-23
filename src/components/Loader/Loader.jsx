@@ -4,9 +4,7 @@ const Ellipsis = () => {
     );
 }
 
-const Loader = ({ open/*, onClose*/ }) => {
-    //const timeOut = setTimeout(() => {onClose();}, 3000);
-    
+const Loader = ({ open }) => {
     return (
         <>
             {open && <div className="bg-modal bg-white z-50">

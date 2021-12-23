@@ -5,7 +5,7 @@ import { useTable, useGlobalFilter, useSortBy, useAsyncDebounce, usePagination }
 import { classNames } from "../../shared/utils";
 import { Button, PageButton, PicknsendButton } from "../Button";
 import { SortDownIcon, SortIcon, SortUpIcon } from "../Icons";
-import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "./hooks/customer-hook";
+import { deleteCustomer, inactivateCustomer, useFindAllCustomers } from "../../hooks/customer-hook";
 import DeleteDialog from "../DeleteDialog";
 
 const GlobalFilter = ({

@@ -15,14 +15,38 @@ const usePopover = (props) => {
         setOpen(false);
     }
 
-    const { severity, message, align, duration } = props;
+    let { severity, message, align, duration } = props;
 
-    const popoverProps = {
+    const getPopoverProps = {
         open,
         severity: severity ? severity : severityPopover,
         message: message ? message : messagePopover,
         align: align ? align : alignPopover,
         duration: duration ? duration : durationPopover
+    }
+
+    const popover = {
+        getStatePopoverProps: () => {
+            return {
+                handleOpenPopover, 
+                handleClosePopover,
+                setMessage,
+                setSeverity,
+                setAlign,
+                setDuration
+            }
+        },
+
+        getPopoverProps: () => {
+            return {
+                open,
+                onClose: handleClosePopover,
+                severity: severity ? severity : severityPopover,
+                message: message ? message : messagePopover,
+                align: align ? align : alignPopover,
+                duration: duration ? duration : durationPopover
+            }
+        }
     }
 
     return { 
@@ -32,7 +56,8 @@ const usePopover = (props) => {
         setSeverity,
         setAlign,
         setDuration,
-        popoverProps
+        popover,
+        getPopoverProps
     }
 }
 

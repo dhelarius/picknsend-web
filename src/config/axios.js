@@ -1,12 +1,31 @@
 import axios from "axios"
 import { vite } from "./env";
 
-const { apiUrl, timeout } = vite;
+const { 
+    authApiUrl, 
+    customerApiUrl, 
+    timeout 
+} = vite;
 
-const instance = axios.create({
-    baseURL: apiUrl,
+function createInstance(baseURL) {
+    return axios.create({
+        baseURL,
+        timeout: timeout,
+        headers: {'content-type': 'application/json'}
+    });
+}
+
+/*const customerInstance = axios.create({
+    baseURL: customerApiUrl,
     timeout: timeout,
     headers: {'content-type': 'application/json'}
-});
+});*/
 
-export default instance
+const authInstance = createInstance(authApiUrl);
+
+const customerInstance = createInstance(customerApiUrl);
+
+export {
+    authInstance,
+    customerInstance
+}

@@ -1,13 +1,13 @@
-import axios from "./axios";
+const http = (instance) => {
+   return {
+        get: (url) => instance.get(url),
 
-const http = {
-    get: (url) => axios.get(url),
+        post: (url, body) => instance.post(url, body),
 
-    post: (url, body) => axios.post(url, body),
-
-    put: (url, data) => axios.put(url, data),
+        put: (url, body) => instance.put(url, body),
     
-    delete: (url) => axios.delete(url)
+        delete: (url) => instance.delete(url)
+   }
 }
 
 export default http

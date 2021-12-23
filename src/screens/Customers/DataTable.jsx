@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import Table, { Actions, StatusPill } from '../../components/Customers/Table';
 import { staticData } from '../../static/staticValues';
-import { useFindAllCustomers} from '../../components/Customers/hooks/customer-hook';
+import { useFindAllCustomers} from '../../hooks/customer-hook';
 import Popover from '../../components/common/Popover/Popover';
 import { usePopover } from '../../components/common/Popover/hooks/popover-hook';
 import { CustomerForm } from '../../screens/Customers/Form';

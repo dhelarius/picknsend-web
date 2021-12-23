@@ -1,8 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Login from "../../components/auth/Login";
+import Signup from "../../components/auth/signup";
 import Logo from "../../components/common/Logo/Logo";
 import { getIconUrl } from "../../utils";
 
-const Auth = ({ children }) => {
+const Auth = ({ loader, popover }) => {
+    const { authMode } = useParams();
+
+    const isLogin = authMode === 'login';
+
     return(
         <div className="fixed flex justify-center items-center top-0 left-0 w-full h-full gradient-picknsend">
             <img className="absolute z-0 top-4 left-4 -rotate-ps-45" src={getIconUrl('courier-messenger-icon')} width='60' height='60' />
@@ -16,7 +22,11 @@ const Auth = ({ children }) => {
                     </Link>
                 </div>
                 <div className="col-span-7 flex justify-center">
-                    {children}
+                    {isLogin ? <Login /> : 
+                    <Signup
+                        {...loader.getStateLoaderProps()}
+                        {...popover.getStatePopoverProps()}
+                    />}
                 </div>
             </div>
         </div>

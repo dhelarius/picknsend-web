@@ -1,16 +1,19 @@
+import { customerInstance } from "../config/axios";
 import http from "../config/http";
 
-const create = (data) => http.post('/customer/create', data)
+const customer = http(customerInstance);
 
-const findAll = () => http.get('/customer')
+const create = (data) => customer.post('/customer/create', data)
 
-const find = (npsv) => http.get(`/customer/${npsv}`)
+const findAll = () => customer.get('/customer')
 
-const update = (data) => http.put(`/customer`, data)
+const find = (npsv) => customer.get(`/customer/${npsv}`)
 
-const inactivate = (npsv) => http.put(`/customer/inactivate/${npsv}`, null)
+const update = (data) => customer.put(`/customer`, data)
 
-const deleteCustomer = (npsv) => http.delete(`/customer/${npsv}`)
+const inactivate = (npsv) => customer.put(`/customer/inactivate/${npsv}`, null)
+
+const deleteCustomer = (npsv) => customer.delete(`/customer/${npsv}`)
 
 export default {
     findAll,

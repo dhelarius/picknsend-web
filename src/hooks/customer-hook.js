@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import customerService from "../../../service/customerService";
+import customerService from "../service/customerService";
 
 const useFindAllCustomers = (deleted, update) => {
     const [customers, setCustomers] = useState([]);

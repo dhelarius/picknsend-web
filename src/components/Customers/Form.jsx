@@ -1,6 +1,6 @@
 import { XIcon } from "@heroicons/react/solid";
 import { useForm } from "react-hook-form";
-import { useCreateCustomer, useUpdateCustomer } from "./hooks/customer-hook";
+import { useCreateCustomer, useUpdateCustomer } from "../../hooks/customer-hook";
 import date from "../../utils/date";
 import { PicknsendButton } from "../Button";
 import { useEffect } from "react/cjs/react.development";
