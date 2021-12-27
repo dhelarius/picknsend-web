@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Logo from "../../components/common/Logo/Logo";
 
 const Home = () => {
     return(
-        <div className="fixed flex flex-col justify-center items-center top-0 left-0 w-full h-full">
+        <>
+            <div className="fixed flex flex-col justify-center items-center top-0 left-0 w-full h-full">
             <div className="mb-4">
                 <Logo />
             </div>
@@ -23,7 +24,9 @@ const Home = () => {
                 <hr className="mx-auto mb-8 w-8/12" />
                 <p className="subtitle">picknsend © 2022</p>
             </div>
-        </div>
+            </div>
+            <Outlet />
+        </>
     );
 }
 

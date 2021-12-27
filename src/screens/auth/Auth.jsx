@@ -22,7 +22,10 @@ const Auth = ({ loader, popover }) => {
                     </Link>
                 </div>
                 <div className="col-span-7 flex justify-center">
-                    {isLogin ? <Login /> : 
+                    {isLogin ? <Login 
+                        {...loader.getStateLoaderProps()}
+                        {...popover.getStatePopoverProps()}
+                    /> : 
                     <Signup
                         {...loader.getStateLoaderProps()}
                         {...popover.getStatePopoverProps()}

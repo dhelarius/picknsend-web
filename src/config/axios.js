@@ -7,19 +7,16 @@ const {
     timeout 
 } = vite;
 
-function createInstance(baseURL) {
+function createInstance(baseURL, token = null) {
     return axios.create({
         baseURL,
         timeout: timeout,
-        headers: {'content-type': 'application/json'}
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
     });
 }
-
-/*const customerInstance = axios.create({
-    baseURL: customerApiUrl,
-    timeout: timeout,
-    headers: {'content-type': 'application/json'}
-});*/
 
 const authInstance = createInstance(authApiUrl);
 

@@ -5,6 +5,12 @@ const auth = http(authInstance);
 
 const signup = (data) => auth.post('/signup', data);
 
-export {
-    signup
+const login = (data) => auth.post('/login', data);
+
+const signout = () => auth.get('/logout');
+
+export default {
+    signup,
+    login,
+    signout
 }

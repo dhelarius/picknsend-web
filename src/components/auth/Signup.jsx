@@ -2,7 +2,7 @@ import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { useShowPassword } from "./hooks/auth-hooks";
 import { useForm } from "react-hook-form"
-import { signup } from "../../service/authService";
+import { authService } from "../../service";
 
 const Signup = ({ 
     handleOpenLoader,
@@ -23,7 +23,7 @@ const Signup = ({
 
     const onSubmit = data => {
         handleOpenLoader();
-        signup(data).then(response => {
+        authService.signup(data).then(response => {
             const { message } = response.data;
             handleSuccess(message);
         }).catch(err => {
