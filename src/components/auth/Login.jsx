@@ -1,9 +1,8 @@
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../context";
 import { useShowPassword } from './hooks/auth-hooks';
-import { useEffect } from "react";
 
 const Login = ({
     handleOpenLoader,
@@ -16,7 +15,10 @@ const Login = ({
 }) => {
     const auth = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const from = location.state?.from?.pathname || "/";
 
     const {
         showPassword,
@@ -25,7 +27,10 @@ const Login = ({
 
     const onSubmit = data => {
         handleOpenLoader();
-        auth.login(data, handleSuccess, handleError);
+        auth.login(data, handleSuccess, handleError, 
+        () => {
+            navigate(from, { replace: true });
+        });
     }
 
     const handleSuccess = (message) => {
@@ -46,12 +51,6 @@ const Login = ({
         setDuration(8000);
         handleOpenPopover();
     }
-
-    useEffect(() => {
-        if (auth.user) {
-            console.log(auth.user);
-        }
-    }, [auth.user]);
 
     return(
         <form className="max-w-lg w-full py-16 px-12" onSubmit={handleSubmit(onSubmit)}>

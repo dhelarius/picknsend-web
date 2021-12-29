@@ -1,7 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import Login from "../../components/auth/Login";
 import Signup from "../../components/auth/signup";
 import Logo from "../../components/common/Logo/Logo";
+import { useAuth } from "../../context";
 import { getIconUrl } from "../../utils";
 
 const Auth = ({ loader, popover }) => {
@@ -36,4 +37,15 @@ const Auth = ({ loader, popover }) => {
     );
 }
 
+const RequiredAuth = ({ children }) => {
+    const auth = useAuth();
+    const location = useLocation();
+
+    return !auth.data ? <Navigate to="/login" state={{ from: location }} /> : children;
+}
+
 export default Auth
+
+export {
+    RequiredAuth
+}
