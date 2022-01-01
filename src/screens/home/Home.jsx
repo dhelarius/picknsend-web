@@ -1,18 +1,23 @@
-import { useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Logo from "../../components/common/Logo/Logo";
+import Loader from "../../components/Loader/Loader";
 import { useAuth } from "../../context";
 
 const Home = () => {
     const auth = useAuth();
+    const location = useLocation();
+    const [loaded, setLoaded] = useState(false);
+
+    const loader = location.pathname !== '/login';
 
     useEffect(() => {
-        auth.session();
+        auth.session(loaded => setLoaded(loaded));
     }, []);
 
     return(
         <>
-            <div className="fixed flex flex-col justify-center items-center top-0 left-0 w-full h-full">
+            {loaded ? <div className="fixed flex flex-col justify-center items-center top-0 left-0 w-full h-full">
             <div className="mb-4">
                 <Logo />
             </div>
@@ -32,7 +37,7 @@ const Home = () => {
                 <hr className="mx-auto mb-8 w-8/12" />
                 <p className="subtitle">picknsend © 2022</p>
             </div>
-            </div>
+            </div> : loader && <Loader open={true} />}
             <Outlet />
         </>
     );

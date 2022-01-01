@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const session = async () => {
+    const session = async (callback) => {
         const result = await authService.session();
         const sess = result.data;
         if(sess.token) {
@@ -30,6 +30,7 @@ const AuthProvider = ({ children }) => {
             sendToken(sess?.token);
             findProfile();
         }
+        callback(true);
     }
 
     const findProfile = () => {
