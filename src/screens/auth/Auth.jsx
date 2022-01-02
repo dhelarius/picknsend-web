@@ -41,7 +41,7 @@ const RequiredAuth = ({ children }) => {
     const auth = useAuth();
     const location = useLocation();
 
-    return !auth.data ? <Navigate to="/login" state={{ from: location }} /> : children;
+    return !auth.data ? <Navigate to="/" state={{ from: location }} replace /> : children;
 }
 
 export default Auth

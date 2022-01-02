@@ -5,7 +5,7 @@ import { staticData } from '../../static/staticValues';
 import { useFindAllCustomers} from '../../hooks/customer-hook';
 import Popover from '../../components/common/Popover/Popover';
 import { usePopover } from '../../components/common/Popover/hooks/popover-hook';
-import { CustomerForm } from '../../screens/Customers/Form';
+import { CustomerForm } from './Form';
 
 const DataTable = () => {
     const [deleted, setDeleted] = useState(false);

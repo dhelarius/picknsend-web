@@ -18,7 +18,7 @@ const Login = ({
     const location = useLocation();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/main";
 
     const {
         showPassword,

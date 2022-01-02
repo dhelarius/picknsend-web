@@ -25,11 +25,15 @@ const AuthProvider = ({ children }) => {
     const session = async (callback) => {
         const result = await authService.session();
         const sess = result.data;
-        if(sess.token) {
-            setData(sess);
-            sendToken(sess?.token);
-            findProfile();
+
+        if(!sess.token) {
+            callback(true);
+            return;
         }
+
+        setData(sess);
+        sendToken(sess?.token);
+        findProfile();
         callback(true);
     }
 
